@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Visit Maison Dorée at 14 Rue de la Paix in the Old Town Quarter. Find our opening hours, directions, and get in touch to place orders, enquire about catering or custom cakes.">
+  <meta property="og:title" content="Visit & Contact | Maison Dorée Artisan Bakery">
+  <meta property="og:description" content="Find us in the Old Town Quarter. Opening hours, directions, and order enquiries for Maison Dorée Artisan Bakery & Pâtisserie.">
+  <meta property="og:type" content="website">
+  <title>Visit & Contact | Maison Dorée Artisan Bakery & Pâtisserie</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream:        #F9F4EC;
+      --cream-dark:   #EFE6D5;
+      --parchment:    #E8DBC8;
+      --gold:         #B8873A;
+      --gold-light:   #D4A855;
+      --gold-pale:    #F0DEB0;
+      --brown:        #3A2A1A;
+      --brown-mid:    #5C3D22;
+      --brown-light:  #8C6544;
+      --rouge:        #8B3A3A;
+      --sage:         #5A6B4F;
+      --text:         #2C1E10;
+      --text-muted:   #7A5C3E;
+      --white:        #FFFDF8;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Cormorant Garamond', Georgia, serif;
+      --font-sans:    'Jost', sans-serif;
+      --max-w: 1240px;
+      --pad: clamp(1.25rem, 5vw, 2.5rem);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { background: var(--cream); color: var(--text); font-family: var(--font-body); font-weight: 400; line-height: 1.7; overflow-x: hidden; }
+    ::selection { background: var(--gold-pale); color: var(--brown); }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── LOADER ── */
+    #loader { position: fixed; inset: 0; background: var(--brown); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.8s var(--ease-out), visibility 0.8s; }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-inner { text-align: center; }
+    .loader-logo { font-family: var(--font-display); font-size: clamp(2.2rem, 6vw, 4rem); color: var(--gold-light); letter-spacing: 0.05em; font-style: italic; opacity: 0; animation: loaderFade 1.2s var(--ease-out) 0.2s forwards; }
+    .loader-tagline { font-family: var(--font-sans); font-size: 0.7rem; color: var(--parchment); letter-spacing: 0.3em; text-transform: uppercase; opacity: 0; animation: loaderFade 1.2s var(--ease-out) 0.6s forwards; margin-top: 0.5rem; }
+    .loader-bar { width: 60px; height: 1px; background: var(--gold); margin: 1.2rem auto 0; transform: scaleX(0); transform-origin: left; animation: loaderBar 1.4s var(--ease-out) 0.4s forwards; }
+    @keyframes loaderFade { to { opacity: 1; } }
+    @keyframes loaderBar { to { transform: scaleX(1); } }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0.9rem var(--pad); display: flex; align-items: center; justify-content: space-between; background: rgba(249,244,236,0.97); backdrop-filter: blur(12px); box-shadow: 0 1px 0 var(--parchment); }
+    .nav-logo { font-family: var(--font-display); font-size: 1.5rem; font-style: italic; color: var(--brown); letter-spacing: 0.03em; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); transition: color 0.3s ease; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--gold-light); transform: scaleX(0); transition: transform 0.3s ease; }
+    .nav-links a:hover { color: var(--brown); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--brown); }
+    .nav-links a.active::after { transform: scaleX(1); }
+    .nav-cta { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.6rem 1.4rem; border: 1px solid var(--gold); color: var(--brown); border-radius: 2px; transition: all 0.3s ease; }
+    .nav-cta:hover { background: var(--gold); color: var(--white); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--brown); transition: all 0.3s ease; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--brown); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; opacity: 0; transition: opacity 0.4s ease; }
+    .mobile-menu.open { display: flex; opacity: 1; }
+    .mobile-menu a { font-family: var(--font-display); font-size: clamp(1.8rem, 5vw, 2.8rem); font-style: italic; color: var(--cream); letter-spacing: 0.03em; transition: color 0.3s ease; }
+    .mobile-menu a:hover { color: var(--gold-light); }
+    .mobile-menu .mobile-cta { font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.8rem 2rem; border: 1px solid var(--gold); color: var(--gold-light); border-radius: 2px; margin-top: 1rem; }
+    @media (max-width: 768px) { .nav-links, .nav-cta { display: none; } .hamburger { display: flex; } }
+
+    /* ── SHARED ── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad); }
+    .section-pad { padding: 7rem 0; }
+    .section-label { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); flex-shrink: 0; }
+    .section-label.center { justify-content: center; }
+    .section-label.center::before { display: none; }
+    .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 3.6rem); font-weight: 400; line-height: 1.12; color: var(--brown); margin-bottom: 1.2rem; }
+    .section-title em { font-style: italic; color: var(--brown-mid); }
+    .section-body { font-family: var(--font-body); font-size: 1.15rem; font-weight: 300; color: var(--text-muted); line-height: 1.75; max-width: 52ch; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans); font-size: 0.76rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 1rem 2.2rem; background: var(--gold); color: var(--white); border-radius: 2px; border: 1px solid var(--gold); transition: all 0.3s ease; cursor: pointer; }
+    .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(184,135,58,0.35); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans); font-size: 0.76rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 1rem 2.2rem; background: transparent; color: var(--brown); border-radius: 2px; border: 1px solid var(--parchment); transition: all 0.3s ease; cursor: pointer; }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ── PAGE HERO ── */
+    .page-hero { position: relative; min-height: 56vh; display: flex; align-items: flex-end; overflow: hidden; padding-top: 80px; }
+    .page-hero-bg { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(44,30,16,0.82) 0%, rgba(58,42,26,0.6) 50%, rgba(44,30,16,0.85) 100%), url('https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=1600&q=80') center/cover no-repeat; transform: scale(1.04); animation: heroZoom 10s ease-out forwards; }
+    @keyframes heroZoom { to { transform: scale(1); } }
+    .page-hero-grain { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); opacity: 0.5; pointer-events: none; }
+    .page-hero-content { position: relative; z-index: 2; max-width: var(--max-w); margin: 0 auto; padding: 4rem var(--pad) 4.5rem; width: 100%; }
+    .page-hero-eyebrow { font-family: var(--font-sans); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; opacity: 0; animation: fadeUp 0.9s var(--ease-out) 1s forwards; }
+    .page-hero-eyebrow::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
+    .page-hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 400; line-height: 1.05; color: var(--white); margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 1s var(--ease-out) 1.2s forwards; }
+    .page-hero h1 em { font-style: italic; color: var(--gold-pale); }
+    .page-hero-sub { font-family: var(--font-body); font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 300; color: rgba(255,255,255,0.72); max-width: 44ch; line-height: 1.65; opacity: 0; animation: fadeUp 1s var(--ease-out) 1.4s forwards; }
+    .breadcrumb { position: absolute; top: 90px; left: 0; right: 0; z-index: 3; }
+    .breadcrumb-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad); display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); opacity: 0; animation: fadeIn 1s ease 1.6s forwards; }
+    .breadcrumb-inner a { color: rgba(255,255,255,0.45); transition: color 0.3s; }
+    .breadcrumb-inner a:hover { color: var(--gold-light); }
+    .breadcrumb-inner span { color: var(--gold-light); }
+
+    /* ── VISIT CARDS ── */
+    #visit { background: var(--white); }
+    .visit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 5rem; }
+    .visit-card { background: var(--cream); border-radius: 2px; padding: 2.4rem 2rem; border-left: 3px solid var(--gold); }
+    .visit-card-icon { width: 48px; height: 48px; background: var(--gold-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.4rem; color: var(--gold); }
+    .visit-card h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--brown); margin-bottom: 0.8rem; }
+    .visit-card p, .visit-card a { font-family: var(--font-body); font-size: 1rem; color: var(--text-muted); line-height: 1.7; display: block; }
+    .visit-card a { color: var(--gold); transition: color 0.3s; }
+    .visit-card a:hover { color: var(--brown); }
+
+    /* ── MAP + HOURS ── */
+    .map-hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .map-wrap { border-radius: 2px; overflow: hidden; position: relative; aspect-ratio: 4/3; background: var(--parchment); }
+    .map-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #EDE3D0 0%, #D9C9A8 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 2rem; text-align: center; }
+    .map-pin-icon { color: var(--gold); }
+    .map-placeholder h4 { font-family: var(--font-display); font-size: 1.4rem; font-style: italic; color: var(--brown); }
+    .map-placeholder p { font-family: var(--font-sans); font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.08em; line-height: 1.6; }
+    .map-placeholder a { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); padding: 0.6rem 1.4rem; border-radius: 2px; transition: all 0.3s ease; margin-top: 0.5rem; display: inline-block; }
+    .map-placeholder a:hover { background: var(--gold); color: var(--white); }
+    .map-street-grid { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(5, 1fr); gap: 3px; width: 100%; height: 100%; padding: 1.5rem; }
+    .map-block { background: rgba(58,42,26,0.08); border-radius: 1px; }
+    .map-block.road-h { background: rgba(255,253,248,0.7); grid-column: 1/-1; }
+    .map-block.road-v { background: rgba(255,253,248,0.7); grid-row: 1/-1; }
+    .map-block.highlight { background: rgba(184,135,58,0.2); border: 1px solid rgba(184,135,58,0.4); }
+
+    .hours-section h3 { font-family: var(--font-display); font-size: 2rem; color: var(--brown); margin-bottom: 0.5rem; }
+    .hours-section > p { font-family: var(--font-body); font-size: 1.05rem; color: var(--text-muted); margin-bottom: 2rem; line-height: 1.7; }
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-row { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-body); font-size: 1rem; padding: 0.8rem 0; border-bottom: 1px solid var(--cream-dark); }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { color: var(--brown); font-weight: 500; }
+    .hours-time { color: var(--text-muted); }
+    .hours-closed { color: var(--brown-light); font-style: italic; }
+    .hours-badge { font-family: var(--font-sans); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; background: var(--sage); color: var(--white); padding: 0.2rem 0.6rem; border-radius: 2px; margin-left: 0.6rem; }
+    .hours-note { font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); margin-top: 1.5rem; line-height: 1.6; padding: 1rem 1.2rem; background: var(--cream); border-left: 2px solid var(--gold-pale); border-radius: 0 2px 2px 0; }
+
+    /* ── ORDER FORM ── */
+    #order { background: var(--cream-dark); }
+    .order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .order-info .section-title { margin-bottom: 1.2rem; }
+    .order-info .section-body { margin-bottom: 2.5rem; }
+    .contact-list { display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 2.5rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .contact-icon { width: 40px; height: 40px; flex-shrink: 0; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .contact-detail h4 { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.2rem; }
+    .contact-detail p { font-family: var(--font-body); font-size: 1.05rem; color: var(--brown); }
+    .contact-detail a { font-family: var(--font-body); font-size: 1.05rem; color: var(--brown); transition: color 0.3s; }
+    .contact-detail a:hover { color: var(--gold); }
+
+    /* Form */
+    .order-form { background: var(--white); padding: 3rem; border-radius: 2px; }
+    .order-form h3 { font-family: var(--font-display); font-size: 1.6rem; color: var(--brown); margin-bottom: 0.5rem; }
+    .order-form > p { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-field { margin-bottom: 1.2rem; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label { display: block; font-family: var(--font-sans); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; font-family: var(--font-body); font-size: 1rem; color: var(--text); background: var(--cream); border: 1px solid var(--parchment); border-radius: 2px; padding: 0.8rem 1rem; transition: border-color 0.3s ease, box-shadow 0.3s ease; outline: none; -webkit-appearance: none; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,135,58,0.12); background: var(--white); }
+    .form-field textarea { height: 120px; resize: vertical; }
+    .form-field input.error, .form-field select.error, .form-field textarea.error { border-color: var(--rouge); }
+    .form-error { font-family: var(--font-sans); font-size: 0.68rem; color: var(--rouge); margin-top: 0.3rem; display: none; }
+    .form-field.invalid .form-error { display: block; }
+    .form-success { display: none; text-align: center; padding: 2rem; }
+    .form-success .check { font-size: 2.5rem; margin-bottom: 1rem; }
+    .form-success h4 { font-family: var(--font-display); font-size: 1.4rem; color: var(--brown); margin-bottom: 0.5rem; }
+    .form-success p { font-family: var(--font-body); font-size: 1rem; color: var(--text-muted); }
+
+    /* ── INSTAGRAM STRIP ── */
+    #instagram { background: var(--cream-dark); padding: 5rem 0; }
+    .instagram-header { text-align: center; margin-bottom: 2.5rem; }
+    .instagram-header p { font-family: var(--font-sans); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+    .instagram-header strong { color: var(--gold); }
+    .insta-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; }
+    .insta-item { aspect-ratio: 1; overflow: hidden; position: relative; border-radius: 2px; }
+    .insta-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease-out); display: block; }
+    .insta-item:hover img { transform: scale(1.08); }
+    .insta-overlay { position: absolute; inset: 0; background: rgba(44,30,16,0); display: flex; align-items: center; justify-content: center; transition: background 0.3s ease; }
+    .insta-overlay span { font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 0.1em; color: transparent; transition: color 0.3s ease; text-transform: uppercase; }
+    .insta-item:hover .insta-overlay { background: rgba(44,30,16,0.45); }
+    .insta-item:hover .insta-overlay span { color: var(--white); }
+    @media (max-width: 768px) { .insta-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* ── FOOTER ── */
+    footer { background: var(--brown); padding: 5rem 0 2.5rem; }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .footer-brand .brand-name { font-family: var(--font-display); font-size: 2rem; font-style: italic; color: var(--gold-light); margin-bottom: 0.4rem; }
+    .footer-brand .brand-tag { font-family: var(--font-sans); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,219,200,0.45); margin-bottom: 1.4rem; }
+    .footer-brand p { font-family: var(--font-body); font-size: 0.97rem; color: rgba(232,219,200,0.6); line-height: 1.7; max-width: 32ch; margin-bottom: 1.8rem; }
+    .social-links { display: flex; gap: 0.8rem; }
+    .social-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(184,135,58,0.35); display: flex; align-items: center; justify-content: center; color: var(--gold-light); transition: all 0.3s ease; }
+    .social-link:hover { background: var(--gold); border-color: var(--gold); color: var(--white); }
+    .footer-col h4 { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1.4rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-col a { font-family: var(--font-body); font-size: 0.97rem; color: rgba(232,219,200,0.6); transition: color 0.3s ease; }
+    .footer-col a:hover { color: var(--gold-light); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 2.5rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-family: var(--font-sans); font-size: 0.7rem; color: rgba(232,219,200,0.35); letter-spacing: 0.05em; }
+    .footer-bottom a { font-family: var(--font-sans); font-size: 0.7rem; color: rgba(232,219,200,0.4); transition: color 0.3s ease; }
+    .footer-bottom a:hover { color: var(--gold-light); }
+
+    /* ── BACK TO TOP ── */
+    #back-top { position: fixed; bottom: 2rem; right: 2rem; width: 46px; height: 46px; background: var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.4s ease; box-shadow: 0 4px 16px rgba(184,135,58,0.4); z-index: 50; border: none; color: var(--white); }
+    #back-top.visible { opacity: 1; pointer-events: auto; }
+    #back-top:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) { .visit-grid { grid-template-columns: 1fr 1fr; } .map-hours-grid { grid-template-columns: 1fr; } .order-grid { grid-template-columns: 1fr; gap: 3.5rem; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; } }
+    @media (max-width: 768px) { .nav-links, .nav-cta { display: none; } .hamburger { display: flex; } .visit-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+  </style>
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">Maison Dorée</div>
+      <div class="loader-bar"></div>
+      <div class="loader-tagline">Visit & Contact</div>
+    </div>
+  </div>
+
+  <!-- BACK TO TOP -->
+  <button id="back-top" aria-label="Back to top">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 8l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="mobile-nav-link">Home</a>
+    <a href="menu.html" class="mobile-nav-link">Menu</a>
+    <a href="contact.html" class="mobile-nav-link">Visit & Contact</a>
+    <a href="#order" class="mobile-nav-link mobile-cta">Order Now</a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">Maison Dorée</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="contact.html" class="active">Visit & Contact</a></li>
+    </ul>
+    <a href="#order" class="nav-cta">Order Now</a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+      <div class="page-hero-bg"></div>
+      <div class="page-hero-grain"></div>
+      <div class="breadcrumb">
+        <div class="breadcrumb-inner">
+          <a href="index.html">Home</a>
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 2l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span>Visit & Contact</span>
+        </div>
+      </div>
+      <div class="page-hero-content">
+        <div class="page-hero-eyebrow">14 Rue de la Paix · Old Town Quarter</div>
+        <h1>Come <em>find us.</em></h1>
+        <p class="page-hero-sub">We're tucked in a corner of the Old Town, a few doors down from the clocktower. Look for the chalkboard, the smell of warm butter, and a small queue of very happy people.</p>
+      </div>
+    </section>
+
+    <!-- VISIT INFO CARDS -->
+    <section id="visit" class="section-pad">
+      <div class="container">
+        <div class="visit-grid" style="margin-bottom:5rem;">
+          <div class="visit-card reveal">
+            <div class="visit-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h3>Where to Find Us</h3>
+            <p>14 Rue de la Paix<br>Old Town Quarter<br>Enter via the cobbled lane off Place du Marché — we're behind the green shutters.</p>
+            <a href="https://maps.google.com" target="_blank" style="margin-top:1rem;">Open in Google Maps →</a>
+          </div>
+          <div class="visit-card reveal reveal-delay-1">
+            <div class="visit-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3>Opening Hours</h3>
+            <p>Monday – Friday: 7:00 AM – 5:00 PM<br>Saturday: 6:30 AM – 4:00 PM<br>Sunday: 7:00 AM – 2:00 PM<br>Public Holidays: Closed</p>
+          </div>
+          <div class="visit-card reveal reveal-delay-2">
+            <div class="visit-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6.06 6.06l.83-.83a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 17.2z"/></svg>
+            </div>
+            <h3>Get in Touch</h3>
+            <a href="tel:+15550421909">+1 (555) 042-1909</a>
+            <a href="mailto:hello@maisondoree.com" style="margin-top:0.3rem;">hello@maisondoree.com</a>
+            <p style="margin-top:0.8rem;">We aim to respond to all messages within one business day.</p>
+          </div>
+        </div>
+
+        <!-- MAP + HOURS -->
+        <div class="map-hours-grid">
+          <div class="map-wrap reveal">
+            <div class="map-placeholder">
+              <svg class="map-pin-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <h4>Maison Dorée</h4>
+              <p>14 Rue de la Paix<br>Old Town Quarter</p>
+              <a href="https://maps.google.com" target="_blank">Get Directions</a>
+            </div>
+          </div>
+
+          <div class="hours-section reveal reveal-delay-1">
+            <p class="section-label">Opening hours</p>
+            <h3>When to <em>Visit</em></h3>
+            <p>We bake everything before we open, so the earlier you arrive the better your chances with the croissants. Bread tends to last until mid-afternoon.</p>
+            <div style="margin-top:1.5rem;">
+              <div class="hours-row">
+                <span class="hours-day">Monday</span>
+                <span class="hours-time">7:00 AM – 5:00 PM <span class="hours-badge">Open</span></span>
+              </div>
+              <div class="hours-row">
+                <span class="hours-day">Tuesday</span>
+                <span class="hours-time">7:00 AM – 5:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span class="hours-day">Wednesday</span>
+                <span class="hours-time">7:00 AM – 5:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span class="hours-day">Thursday</span>
+                <span class="hours-time">7:00 AM – 5:00 PM <span style="font-family:var(--font-sans);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;background:var(--gold-pale);color:var(--gold);padding:0.2rem 0.6rem;border-radius:2px;margin-left:0.6rem;">Sub day</span></span>
+              </div>
+              <div class="hours-row">
+                <span class="hours-day">Friday</span>
+                <span class="hours-time">7:00 AM – 5:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span class="hours-day">Saturday</span>
+                <span class="hours-time">6:30 AM – 4:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span class="hours-day">Sunday</span>
+                <span class="hours-time">7:00 AM – 2:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span class="hours-day">Public Holidays</span>
+                <span class="hours-closed">Closed</span>
+              </div>
+            </div>
+            <p class="hours-note">Viennoiseries typically sell out by 10:30 AM. Bread is usually available until 2–3 PM. We recommend arriving early on weekends.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / ORDER FORM -->
+    <section id="order" class="section-pad">
+      <div class="container">
+        <div class="order-grid">
+          <div class="order-info reveal">
+            <p class="section-label">Get in touch</p>
+            <h2 class="section-title">Orders & <em>Enquiries</em></h2>
+            <p class="section-body">Whether you'd like to pre-order a loaf, enquire about a celebration cake, ask about catering, or simply say hello — we'd love to hear from you.</p>
+
+            <div class="contact-list" style="margin-top:2.5rem;">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="contact-detail">
+                  <h4>Address</h4>
+                  <p>14 Rue de la Paix, Old Town Quarter</p>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6.06 6.06l.83-.83a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 17.2z"/></svg>
+                </div>
+                <div class="contact-detail">
+                  <h4>Phone</h4>
+                  <a href="tel:+15550421909">+1 (555) 042-1909</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div class="contact-detail">
+                  <h4>Email</h4>
+                  <a href="mailto:hello@maisondoree.com">hello@maisondoree.com</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div class="contact-detail">
+                  <h4>Response Time</h4>
+                  <p>Within one business day</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-form reveal reveal-delay-1" id="contactForm">
+            <h3>Send us a message</h3>
+            <p>For celebration cake orders, please allow at least 5 days notice. For wholesale enquiries, we'll arrange a tasting first.</p>
+            <div class="form-row">
+              <div class="form-field" id="field-name">
+                <label for="name">Your Name *</label>
+                <input type="text" id="name" placeholder="Claire Dupont">
+                <div class="form-error">Please enter your name.</div>
+              </div>
+              <div class="form-field" id="field-email">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" placeholder="hello@example.com">
+                <div class="form-error">Please enter a valid email.</div>
+              </div>
+            </div>
+            <div class="form-field" id="field-type">
+              <label for="type">Enquiry Type *</label>
+              <select id="type">
+                <option value="">Select an option…</option>
+                <option value="preorder">Pre-order (bread / pastries)</option>
+                <option value="cake">Celebration Cake</option>
+                <option value="subscription">Subscription Enquiry</option>
+                <option value="catering">Catering / Wholesale</option>
+                <option value="general">General Question</option>
+              </select>
+              <div class="form-error">Please select an enquiry type.</div>
+            </div>
+            <div class="form-field" id="field-date">
+              <label for="date">Collection / Event Date (if applicable)</label>
+              <input type="date" id="date">
+            </div>
+            <div class="form-field full" id="field-message">
+              <label for="message">Your Message *</label>
+              <textarea id="message" placeholder="Tell us what you have in mind — the more detail, the better we can help…"></textarea>
+              <div class="form-error">Please include a message.</div>
+            </div>
+            <button class="btn-primary" onclick="submitForm()" style="width:100%;justify-content:center;">
+              Send Enquiry
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="form-success" id="formSuccess">
+              <div class="check">✉️</div>
+              <h4>Merci beaucoup!</h4>
+              <p>Your enquiry has been received. Claire or a member of the team will be in touch within 24 hours.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTAGRAM STRIP -->
+    <section id="instagram">
+      <div class="container">
+        <div class="instagram-header">
+          <p>Follow along on Instagram <strong>@maisondoree</strong></p>
+        </div>
+        <div class="insta-grid">
+          <div class="insta-item"><img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=300&q=80" alt="Croissants" loading="lazy"><div class="insta-overlay"><span>View</span></div></div>
+          <div class="insta-item"><img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=300&q=80" alt="Sourdough" loading="lazy"><div class="insta-overlay"><span>View</span></div></div>
+          <div class="insta-item"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&q=80" alt="Fruit Tart" loading="lazy"><div class="insta-overlay"><span>View</span></div></div>
+          <div class="insta-item"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300&q=80" alt="Pain au Chocolat" loading="lazy"><div class="insta-overlay"><span>View</span></div></div>
+          <div class="insta-item"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=300&q=80" alt="Cakes" loading="lazy"><div class="insta-overlay"><span>View</span></div></div>
+          <div class="insta-item"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&q=80" alt="Celebration Cake" loading="lazy"><div class="insta-overlay"><span>View</span></div></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-name">Maison Dorée</div>
+          <div class="brand-tag">Artisan Bakery &amp; Pâtisserie · Est. 2009</div>
+          <p>A small bakery in the Old Town Quarter dedicated to the craft of slow, honest baking. Come early. The croissants go fast.</p>
+          <div class="social-links">
+            <a class="social-link" href="#" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a class="social-link" href="#" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a class="social-link" href="#" aria-label="Pinterest"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.852 0 1.265.64 1.265 1.408 0 .858-.546 2.14-.828 3.33-.236.995.499 1.806 1.476 1.806 1.772 0 3.135-1.867 3.135-4.563 0-2.39-1.718-4.059-4.168-4.059-2.837 0-4.502 2.126-4.502 4.323 0 .856.33 1.773.741 2.274a.3.3 0 0 1 .07.286c-.076.315-.245.995-.278 1.134-.044.183-.145.222-.333.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">Our Story</a></li>
+            <li><a href="menu.html">Our Menu</a></li>
+            <li><a href="contact.html">Visit & Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Offerings</h4>
+          <ul>
+            <li><a href="menu.html">Artisan Breads</a></li>
+            <li><a href="menu.html">Viennoiseries</a></li>
+            <li><a href="menu.html">Cakes & Tarts</a></li>
+            <li><a href="contact.html#order">Custom Cakes</a></li>
+            <li><a href="menu.html#subscriptions">Subscriptions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Visit</h4>
+          <ul>
+            <li><a href="#">14 Rue de la Paix</a></li>
+            <li><a href="#">Old Town Quarter</a></li>
+            <li><a href="tel:+15550421909">+1 (555) 042-1909</a></li>
+            <li><a href="mailto:hello@maisondoree.com">hello@maisondoree.com</a></li>
+            <li><a href="https://maps.google.com" target="_blank">Get Directions →</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Maison Dorée Boulangerie. All rights reserved.</p>
+        <div style="display:flex;gap:1.5rem;">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Wholesale</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // LOADER
+    window.addEventListener('load', () => { setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1800); });
+
+    // BACK TO TOP
+    document.getElementById('back-top').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('scroll', () => { document.getElementById('back-top').classList.toggle('visible', window.scrollY > 500); });
+
+    // HAMBURGER
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+    });
+
+    // SCROLL REVEAL
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // FORM VALIDATION
+    function submitForm() {
+      let valid = true;
+      const name = document.getElementById('name');
+      const nameField = document.getElementById('field-name');
+      nameField.classList.toggle('invalid', !name.value.trim());
+      if (!name.value.trim()) { name.classList.add('error'); valid = false; } else { name.classList.remove('error'); }
+
+      const email = document.getElementById('email');
+      const emailField = document.getElementById('field-email');
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+      emailField.classList.toggle('invalid', !emailOk);
+      if (!emailOk) { email.classList.add('error'); valid = false; } else { email.classList.remove('error'); }
+
+      const type = document.getElementById('type');
+      const typeField = document.getElementById('field-type');
+      typeField.classList.toggle('invalid', !type.value);
+      if (!type.value) { type.classList.add('error'); valid = false; } else { type.classList.remove('error'); }
+
+      const message = document.getElementById('message');
+      const messageField = document.getElementById('field-message');
+      messageField.classList.toggle('invalid', !message.value.trim());
+      if (!message.value.trim()) { message.classList.add('error'); valid = false; } else { message.classList.remove('error'); }
+
+      if (valid) {
+        document.querySelector('#contactForm .form-row')?.remove();
+        document.querySelectorAll('#contactForm .form-field, #contactForm h3, #contactForm > p, #contactForm .btn-primary').forEach(el => el.style.display = 'none');
+        document.getElementById('formSuccess').style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
