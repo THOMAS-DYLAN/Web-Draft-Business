@@ -1,819 +1,434 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Browse the full Maison Dorée menu — slow-fermented artisan breads, hand-laminated viennoiseries, seasonal tarts, celebration cakes, and weekly bread subscriptions. Baked fresh daily in the Old Town Quarter.">
-  <meta property="og:title" content="Our Menu | Maison Dorée Artisan Bakery">
-  <meta property="og:description" content="Slow-fermented breads, hand-laminated croissants, seasonal tarts and celebration cakes — crafted before dawn, every morning.">
-  <meta property="og:type" content="website">
-  <title>Our Menu | Maison Dorée Artisan Bakery & Pâtisserie</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Browse the full Maison Dorée menu — slow-fermented breads, hand-laminated viennoiseries, seasonal pâtisserie, and weekly bread subscriptions. Baked fresh in Portland's Old Town.">
+<meta property="og:title" content="Our Menu | Maison Dorée Artisan Bakery">
+<meta property="og:type" content="website">
+<title>Our Menu | Maison Dorée Artisan Bakery & Pâtisserie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F9F4EC;--cream-dk:#EFE6D5;--parchment:#E8DBC8;
+  --gold:#B8873A;--gold-lt:#D4A855;--gold-pale:#F0DEB0;
+  --brown:#3A2A1A;--brown-md:#5C3D22;--brown-lt:#8C6544;
+  --espresso:#1A0E05;--rouge:#8B3A3A;--sage:#5A6B4F;
+  --text:#2C1E10;--muted:#7A5C3E;--white:#FFFDF8;
+  --fd:'Playfair Display',Georgia,serif;
+  --fb:'Cormorant Garamond',Georgia,serif;
+  --fs:'Jost',sans-serif;
+  --pad:clamp(1.25rem,5vw,2.5rem);--max:1240px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--text);font-family:var(--fb);line-height:1.7;overflow-x:hidden}
+::selection{background:var(--gold-pale);color:var(--brown)}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes zoom{to{transform:scale(1)}}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+/* NAV — always solid on interior pages */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.9rem var(--pad);background:rgba(249,244,236,.97);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--parchment);display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--fd);font-size:1.45rem;font-style:italic;color:var(--brown)}
+.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center}
+.nav-links a{font-family:var(--fs);font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--gold-lt);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.nav-links a:hover{color:var(--brown)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-links a.active{color:var(--brown)}
+.nav-cta{font-family:var(--fs);font-size:.7rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;padding:.6rem 1.4rem;border:1px solid var(--gold);color:var(--brown);border-radius:2px;transition:all .3s}
+.nav-cta:hover{background:var(--gold);color:var(--white)}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+.ham span{display:block;width:22px;height:1.5px;background:var(--brown);transition:all .3s}
+.ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mob{display:none;position:fixed;inset:0;background:var(--brown);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;opacity:0;transition:opacity .4s}
+.mob.open{display:flex;opacity:1}
+.mob a{font-family:var(--fd);font-size:clamp(1.8rem,5vw,2.8rem);font-style:italic;color:var(--cream);transition:color .3s}
+.mob a:hover{color:var(--gold-lt)}
+.mob .mob-cta{font-family:var(--fs);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;padding:.8rem 2rem;border:1px solid var(--gold);color:var(--gold-lt);border-radius:2px}
+@media(max-width:768px){.nav-links,.nav-cta{display:none}.ham{display:flex}}
 
-  <style>
-    :root {
-      --cream:        #F9F4EC;
-      --cream-dark:   #EFE6D5;
-      --parchment:    #E8DBC8;
-      --gold:         #B8873A;
-      --gold-light:   #D4A855;
-      --gold-pale:    #F0DEB0;
-      --brown:        #3A2A1A;
-      --brown-mid:    #5C3D22;
-      --brown-light:  #8C6544;
-      --rouge:        #8B3A3A;
-      --sage:         #5A6B4F;
-      --text:         #2C1E10;
-      --text-muted:   #7A5C3E;
-      --white:        #FFFDF8;
-      --font-display: 'Playfair Display', Georgia, serif;
-      --font-body:    'Cormorant Garamond', Georgia, serif;
-      --font-sans:    'Jost', sans-serif;
-      --max-w: 1240px;
-      --pad: clamp(1.25rem, 5vw, 2.5rem);
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    }
+/* PAGE HERO */
+.page-hero{position:relative;min-height:56vh;display:flex;align-items:flex-end;overflow:hidden;padding-top:68px}
+.ph-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.04);animation:zoom 10s ease-out forwards}
+.ph-overlay{position:absolute;inset:0;background:linear-gradient(165deg,rgba(26,14,5,.78) 0%,rgba(58,42,26,.5) 55%,rgba(26,14,5,.82) 100%)}
+.ph-grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.5;pointer-events:none}
+.ph-content{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:3.5rem var(--pad) 4rem;width:100%}
+.ph-eyebrow{font-family:var(--fs);font-size:.65rem;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--gold-lt);display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;opacity:0;animation:up .9s var(--ease) .4s forwards}
+.ph-eyebrow::before{content:'';width:40px;height:1px;background:var(--gold)}
+.ph-content h1{font-family:var(--fd);font-size:clamp(2.8rem,7vw,6.5rem);font-weight:400;line-height:1.0;color:var(--white);opacity:0;animation:up 1s var(--ease) .6s forwards}
+.ph-content h1 em{font-style:italic;color:var(--gold-pale)}
+.ph-sub{font-family:var(--fb);font-size:clamp(1rem,1.5vw,1.25rem);font-weight:300;font-style:italic;color:rgba(255,255,255,.7);max-width:46ch;margin-top:1rem;line-height:1.65;opacity:0;animation:up 1s var(--ease) .8s forwards}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body { background: var(--cream); color: var(--text); font-family: var(--font-body); font-weight: 400; line-height: 1.7; overflow-x: hidden; }
-    ::selection { background: var(--gold-pale); color: var(--brown); }
-    a { color: inherit; text-decoration: none; }
+/* SHARED */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.sp{padding:6rem 0}
+.lbl{font-family:var(--fs);font-size:.64rem;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem;display:flex;align-items:center;gap:.8rem}
+.lbl::before{content:'';width:28px;height:1px;background:var(--gold);flex-shrink:0}
+.lbl.c{justify-content:center}.lbl.c::before{display:none}
+.lbl.lt{color:var(--gold-lt)}.lbl.lt::before{background:var(--gold-lt)}
+.h2{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3.4rem);font-weight:400;line-height:1.12;color:var(--brown);margin-bottom:1.2rem}
+.h2 em{font-style:italic;color:var(--brown-md)}
+.h2.lt{color:var(--cream)}
+.body{font-family:var(--fb);font-size:1.1rem;font-weight:300;color:var(--muted);line-height:1.78;max-width:52ch}
+.btn{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--fs);font-size:.73rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:1rem 2.2rem;border-radius:2px;transition:all .3s}
+.btn-gold{background:var(--gold);color:var(--white);border:1px solid var(--gold)}
+.btn-gold:hover{background:var(--gold-lt);border-color:var(--gold-lt);transform:translateY(-1px);box-shadow:0 8px 24px rgba(184,135,58,.35)}
+.btn-outline{background:transparent;color:var(--brown);border:1px solid var(--parchment)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-outline-lt{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.35)}
+.btn-outline-lt:hover{border-color:var(--gold-lt);color:var(--gold-lt)}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+#btt{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;background:var(--gold);border:none;border-radius:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--white);opacity:0;pointer-events:none;transition:opacity .4s,transform .3s;z-index:50}
+#btt.show{opacity:1;pointer-events:auto}
+#btt:hover{background:var(--gold-lt);transform:translateY(-2px)}
+#btt svg{width:15px;height:15px}
 
-    /* ── LOADER ── */
-    #loader { position: fixed; inset: 0; background: var(--brown); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.8s var(--ease-out), visibility 0.8s; }
-    #loader.hidden { opacity: 0; visibility: hidden; }
-    .loader-inner { text-align: center; }
-    .loader-logo { font-family: var(--font-display); font-size: clamp(2.2rem, 6vw, 4rem); color: var(--gold-light); letter-spacing: 0.05em; font-style: italic; opacity: 0; animation: loaderFade 1.2s var(--ease-out) 0.2s forwards; }
-    .loader-tagline { font-family: var(--font-sans); font-size: 0.7rem; color: var(--parchment); letter-spacing: 0.3em; text-transform: uppercase; opacity: 0; animation: loaderFade 1.2s var(--ease-out) 0.6s forwards; margin-top: 0.5rem; }
-    .loader-bar { width: 60px; height: 1px; background: var(--gold); margin: 1.2rem auto 0; transform: scaleX(0); transform-origin: left; animation: loaderBar 1.4s var(--ease-out) 0.4s forwards; }
-    @keyframes loaderFade { to { opacity: 1; } }
-    @keyframes loaderBar { to { transform: scaleX(1); } }
+/* TAB MENU */
+#menu-section{background:var(--cream-dk)}
+.tabs-sticky{background:var(--white);border-bottom:1px solid var(--parchment);position:sticky;top:64px;z-index:50}
+.tabs-inner{max-width:var(--max);margin:0 auto;padding:0 var(--pad);display:flex;overflow-x:auto}
+.tab{font-family:var(--fs);font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:1.2rem 1.8rem;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:color .3s,border-color .3s;white-space:nowrap}
+.tab.active{color:var(--brown);border-bottom-color:var(--gold)}
+.tab:hover{color:var(--brown)}
+.panel{display:none;padding:3.5rem 0}
+.panel.active{display:block}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{background:var(--white);border-radius:2px;overflow:hidden;transition:transform .4s var(--ease),box-shadow .4s}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(26,14,5,.12)}
+.card-img{height:210px;overflow:hidden;position:relative}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);display:block}
+.card:hover .card-img img{transform:scale(1.06)}
+.card-tag{position:absolute;top:1rem;right:1rem;font-family:var(--fs);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .7rem;background:var(--gold);color:var(--white);border-radius:2px}
+.card-tag.r{background:var(--rouge)}.card-tag.s{background:var(--sage)}
+.card-body{padding:1.4rem 1.7rem 1.7rem}
+.card-body h3{font-family:var(--fd);font-size:1.18rem;font-weight:600;color:var(--brown);margin-bottom:.4rem}
+.card-body p{font-family:var(--fb);font-size:.92rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:.9rem;border-top:1px solid var(--cream-dk)}
+.card-price{font-family:var(--fd);font-size:1.12rem;color:var(--gold);font-weight:600}
+.card-note{font-family:var(--fs);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brown-lt)}
 
-    /* ── NAV ── */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.4rem var(--pad); display: flex; align-items: center; justify-content: space-between; background: rgba(249,244,236,0.97); backdrop-filter: blur(12px); padding: 0.9rem var(--pad); box-shadow: 0 1px 0 var(--parchment); }
-    .nav-logo { font-family: var(--font-display); font-size: 1.5rem; font-style: italic; color: var(--brown); letter-spacing: 0.03em; }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
-    .nav-links a { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); transition: color 0.3s ease; position: relative; }
-    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--gold-light); transform: scaleX(0); transition: transform 0.3s ease; }
-    .nav-links a:hover { color: var(--brown); }
-    .nav-links a:hover::after { transform: scaleX(1); }
-    .nav-links a.active { color: var(--brown); }
-    .nav-links a.active::after { transform: scaleX(1); }
-    .nav-cta { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.6rem 1.4rem; border: 1px solid var(--gold); color: var(--brown); border-radius: 2px; transition: all 0.3s ease; }
-    .nav-cta:hover { background: var(--gold); color: var(--white); }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
-    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--brown); transition: all 0.3s ease; }
-    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-    .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--brown); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; opacity: 0; transition: opacity 0.4s ease; }
-    .mobile-menu.open { display: flex; opacity: 1; }
-    .mobile-menu a { font-family: var(--font-display); font-size: clamp(1.8rem, 5vw, 2.8rem); font-style: italic; color: var(--cream); letter-spacing: 0.03em; transition: color 0.3s ease; }
-    .mobile-menu a:hover { color: var(--gold-light); }
-    .mobile-menu .mobile-cta { font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.8rem 2rem; border: 1px solid var(--gold); color: var(--gold-light); border-radius: 2px; margin-top: 1rem; }
-    @media (max-width: 768px) { .nav-links, .nav-cta { display: none; } .hamburger { display: flex; } }
+/* SEASONAL FEATURE */
+#seasonal{background:var(--white);padding:5rem 0}
+.seasonal-inner{background:var(--brown);border-radius:4px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+.s-img{height:400px;object-fit:cover;display:block;width:100%;filter:brightness(.6) saturate(.8)}
+.s-content{padding:3.5rem 4rem;display:flex;flex-direction:column;justify-content:center}
+.s-content .h2{color:var(--cream);margin-bottom:1rem}
+.s-content .body{color:rgba(232,219,200,.65);margin-bottom:2.5rem}
 
-    /* ── SHARED ── */
-    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad); }
-    .section-pad { padding: 7rem 0; }
-    .section-label { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.8rem; }
-    .section-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); flex-shrink: 0; }
-    .section-label.center { justify-content: center; }
-    .section-label.center::before { display: none; }
-    .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 3.6rem); font-weight: 400; line-height: 1.12; color: var(--brown); margin-bottom: 1.2rem; }
-    .section-title em { font-style: italic; color: var(--brown-mid); }
-    .section-body { font-family: var(--font-body); font-size: 1.15rem; font-weight: 300; color: var(--text-muted); line-height: 1.75; max-width: 52ch; }
-    .btn-primary { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans); font-size: 0.76rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 1rem 2.2rem; background: var(--gold); color: var(--white); border-radius: 2px; border: 1px solid var(--gold); transition: all 0.3s ease; cursor: pointer; }
-    .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(184,135,58,0.35); }
-    .btn-ghost { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans); font-size: 0.76rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 1rem 2.2rem; background: transparent; color: var(--brown); border-radius: 2px; border: 1px solid var(--parchment); transition: all 0.3s ease; cursor: pointer; }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* SUBSCRIPTIONS */
+#subs{background:var(--espresso);padding:6rem 0}
+.subs-header{text-align:center;margin-bottom:3.5rem}
+.subs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.sub-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:2.4rem 2rem;position:relative;transition:background .4s,border-color .4s}
+.sub-card:hover{background:rgba(255,255,255,.07);border-color:rgba(184,135,58,.3)}
+.sub-card.feat{border-color:rgba(184,135,58,.4)}
+.sub-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-family:var(--fs);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;background:var(--gold);color:var(--espresso);padding:4px 14px;white-space:nowrap}
+.sub-name{font-family:var(--fd);font-size:1.55rem;letter-spacing:.06em;color:var(--cream);margin-bottom:.4rem}
+.sub-freq{font-family:var(--fs);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,222,176,.4);margin-bottom:1.5rem}
+.sub-price{font-family:var(--fd);font-size:clamp(2.2rem,3.5vw,3.5rem);color:var(--gold-lt);line-height:1;margin-bottom:.3rem}
+.sub-price sup{font-size:1.1rem;vertical-align:top;margin-top:.4rem}
+.sub-period{font-family:var(--fs);font-size:.62rem;color:rgba(240,222,176,.35);margin-bottom:2rem}
+.sub-feats{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem}
+.sub-feats li{font-family:var(--fb);font-size:.97rem;color:rgba(232,219,200,.62);display:flex;gap:.7rem}
+.sub-feats li::before{content:'✦';color:var(--gold);font-size:.58rem;margin-top:.35rem;flex-shrink:0}
 
-    /* ── PAGE HERO ── */
-    .page-hero {
-      position: relative;
-      min-height: 56vh;
-      display: flex; align-items: flex-end;
-      overflow: hidden;
-      padding-top: 80px;
-    }
-    .page-hero-bg {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(160deg, rgba(44,30,16,0.78) 0%, rgba(58,42,26,0.55) 50%, rgba(44,30,16,0.82) 100%),
-        url('https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1600&q=80') center/cover no-repeat;
-      transform: scale(1.04);
-      animation: heroZoom 10s ease-out forwards;
-    }
-    @keyframes heroZoom { to { transform: scale(1); } }
-    .page-hero-grain { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); opacity: 0.5; pointer-events: none; }
-    .page-hero-content { position: relative; z-index: 2; max-width: var(--max-w); margin: 0 auto; padding: 4rem var(--pad) 4.5rem; width: 100%; }
-    .page-hero-eyebrow { font-family: var(--font-sans); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; opacity: 0; animation: fadeUp 0.9s var(--ease-out) 1s forwards; }
-    .page-hero-eyebrow::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
-    .page-hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 400; line-height: 1.05; color: var(--white); margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 1s var(--ease-out) 1.2s forwards; }
-    .page-hero h1 em { font-style: italic; color: var(--gold-pale); }
-    .page-hero-sub { font-family: var(--font-body); font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 300; color: rgba(255,255,255,0.72); max-width: 44ch; line-height: 1.65; opacity: 0; animation: fadeUp 1s var(--ease-out) 1.4s forwards; }
+/* FAQ */
+#faq{background:var(--cream-dk);padding:6rem 0}
+.faq-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.faq-aside h3{font-family:var(--fd);font-size:1.9rem;color:var(--brown);margin-bottom:.8rem}
+.faq-aside h3 em{font-style:italic}
+.faq-aside p{font-family:var(--fb);font-size:1.05rem;color:var(--muted);line-height:1.75;margin-bottom:1.4rem}
+.faq-aside a{font-family:var(--fs);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--gold-pale);padding-bottom:2px;transition:all .3s}
+.faq-aside a:hover{color:var(--brown);border-color:var(--brown)}
+.faq-list{display:flex;flex-direction:column}
+.faq-item{border-bottom:1px solid var(--parchment)}
+.faq-q{width:100%;background:none;border:none;padding:1.3rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem;cursor:pointer;text-align:left}
+.faq-q h4{font-family:var(--fd);font-size:1.08rem;color:var(--brown);font-weight:500;line-height:1.3}
+.faq-icon{flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid var(--parchment);display:flex;align-items:center;justify-content:center;color:var(--brown-lt);transition:all .3s}
+.faq-item.open .faq-icon{background:var(--gold);border-color:var(--gold);color:var(--white);transform:rotate(45deg)}
+.faq-icon svg{width:12px;height:12px}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease)}
+.faq-a p{font-family:var(--fb);font-size:1rem;color:var(--muted);line-height:1.75;padding-bottom:1.3rem}
+.faq-item.open .faq-a{max-height:300px}
 
-    /* Breadcrumb */
-    .breadcrumb { position: absolute; top: 90px; left: 0; right: 0; z-index: 3; }
-    .breadcrumb-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad); display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); opacity: 0; animation: fadeIn 1s ease 1.6s forwards; }
-    .breadcrumb-inner a { color: rgba(255,255,255,0.45); transition: color 0.3s; }
-    .breadcrumb-inner a:hover { color: var(--gold-light); }
-    .breadcrumb-inner span { color: var(--gold-light); }
+/* FOOTER */
+footer{background:var(--brown);padding:4.5rem var(--pad) 2.5rem}
+.footer-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:3.5rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.f-logo{font-family:var(--fd);font-size:1.9rem;font-style:italic;color:var(--gold-lt);margin-bottom:.4rem}
+.f-tag{font-family:var(--fs);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(232,219,200,.35);margin-bottom:1.2rem}
+.f-desc{font-family:var(--fb);font-size:.95rem;color:rgba(232,219,200,.55);line-height:1.7;max-width:30ch;margin-bottom:1.5rem}
+.f-socials{display:flex;gap:.8rem}
+.f-soc{width:34px;height:34px;border-radius:50%;border:1px solid rgba(184,135,58,.3);display:flex;align-items:center;justify-content:center;color:var(--gold-lt);transition:all .3s}
+.f-soc:hover{background:var(--gold);border-color:var(--gold);color:var(--white)}
+.f-soc svg{width:14px;height:14px}
+.footer-col h5{font-family:var(--fs);font-size:.62rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:1.3rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+.footer-col a{font-family:var(--fb);font-size:.95rem;color:rgba(232,219,200,.55);transition:color .3s}
+.footer-col a:hover{color:var(--gold-lt)}
+.footer-bottom{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding-top:2.2rem;flex-wrap:wrap;gap:.8rem}
+.footer-bottom p,.footer-bottom a{font-family:var(--fs);font-size:.68rem;color:rgba(232,219,200,.3)}
+.footer-bottom a:hover{color:var(--gold-lt)}
 
-    /* ── MENU SECTION ── */
-    #menu { background: var(--cream-dark); }
-    .menu-intro { text-align: center; margin-bottom: 3.5rem; }
-    .menu-intro .section-label { justify-content: center; }
-    .menu-intro .section-label::before { display: none; }
-    .menu-intro .section-title { margin: 0 auto 1rem; }
-    .menu-intro .section-body { margin: 0 auto; text-align: center; }
-
-    /* Tab switcher */
-    .menu-tabs { display: flex; justify-content: center; gap: 0; margin-bottom: 3.5rem; border: 1px solid var(--parchment); border-radius: 2px; overflow: hidden; width: fit-content; margin-left: auto; margin-right: auto; box-shadow: 0 2px 8px rgba(44,30,16,0.08); }
-    .menu-tab { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.75rem 1.8rem; background: var(--white); color: var(--text-muted); border: none; cursor: pointer; transition: all 0.3s ease; border-right: 1px solid var(--parchment); }
-    .menu-tab:last-child { border-right: none; }
-    .menu-tab.active { background: var(--gold); color: var(--white); }
-    .menu-tab:hover:not(.active) { background: var(--cream); color: var(--brown); }
-    .menu-panel { display: none; }
-    .menu-panel.active { display: block; }
-
-    /* Card grid */
-    .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .menu-card { background: var(--white); border-radius: 2px; overflow: hidden; transition: transform 0.4s var(--ease-out), box-shadow 0.4s ease; }
-    .menu-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(44,30,16,0.14); }
-    .menu-card-img { height: 220px; overflow: hidden; position: relative; }
-    .menu-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-out); display: block; }
-    .menu-card:hover .menu-card-img img { transform: scale(1.06); }
-    .menu-card-tag { position: absolute; top: 1rem; right: 1rem; font-family: var(--font-sans); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.3rem 0.7rem; background: var(--gold); color: var(--white); border-radius: 2px; }
-    .menu-card-tag.seasonal { background: var(--rouge); }
-    .menu-card-tag.new { background: var(--sage); }
-    .menu-card-body { padding: 1.5rem 1.8rem 1.8rem; }
-    .menu-card-body h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; color: var(--brown); margin-bottom: 0.45rem; }
-    .menu-card-body p { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.1rem; }
-    .menu-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--cream-dark); }
-    .menu-price { font-family: var(--font-display); font-size: 1.2rem; color: var(--gold); font-weight: 600; }
-    .menu-detail { font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown-light); }
-
-    /* ── SEASONAL FEATURE ── */
-    #seasonal { background: var(--white); padding: 5rem 0; }
-    .seasonal-inner { background: var(--brown); border-radius: 4px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; }
-    .seasonal-img { width: 100%; height: 420px; object-fit: cover; display: block; }
-    .seasonal-content { padding: 4rem 4.5rem; display: flex; flex-direction: column; justify-content: center; }
-    .seasonal-content .section-label { color: var(--gold-light); }
-    .seasonal-content .section-label::before { background: var(--gold-light); }
-    .seasonal-content .section-title { color: var(--cream); margin-bottom: 1.2rem; }
-    .seasonal-content .section-body { color: rgba(232,219,200,0.7); margin-bottom: 2.5rem; }
-    @media (max-width: 1024px) { .seasonal-inner { grid-template-columns: 1fr; } .seasonal-img { height: 280px; } .seasonal-content { padding: 2.5rem 2rem; } }
-
-    /* ── SUBSCRIPTIONS ── */
-    #subscriptions { background: var(--cream-dark); }
-    .subs-header { text-align: center; margin-bottom: 4rem; }
-    .subs-header .section-label { justify-content: center; }
-    .subs-header .section-label::before { display: none; }
-    .subs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .sub-card { background: var(--white); border-radius: 2px; padding: 2.4rem 2rem; position: relative; transition: transform 0.4s var(--ease-out), box-shadow 0.4s ease; border: 1px solid transparent; }
-    .sub-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(44,30,16,0.12); }
-    .sub-card.featured { border-color: var(--gold); }
-    .sub-featured-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); font-family: var(--font-sans); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--gold); color: var(--white); padding: 0.3rem 1rem; border-radius: 2px; white-space: nowrap; }
-    .sub-card h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--brown); margin-bottom: 0.3rem; }
-    .sub-card .sub-freq { font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem; }
-    .sub-price { font-family: var(--font-display); font-size: 2.8rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 0.3rem; }
-    .sub-price sup { font-size: 1.2rem; vertical-align: top; margin-top: 0.5rem; }
-    .sub-price-note { font-family: var(--font-sans); font-size: 0.7rem; color: var(--text-muted); margin-bottom: 2rem; }
-    .sub-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
-    .sub-features li { font-family: var(--font-body); font-size: 0.97rem; color: var(--text-muted); display: flex; align-items: flex-start; gap: 0.6rem; }
-    .sub-features li::before { content: '✦'; color: var(--gold); font-size: 0.6rem; margin-top: 0.35rem; flex-shrink: 0; }
-
-    /* ── FAQ ── */
-    #faq { background: var(--white); }
-    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-    .faq-aside h3 { font-family: var(--font-display); font-size: 2rem; color: var(--brown); margin-bottom: 1rem; }
-    .faq-aside p { font-family: var(--font-body); font-size: 1.05rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
-    .faq-aside a { font-family: var(--font-sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold-pale); padding-bottom: 2px; transition: color 0.3s, border-color 0.3s; }
-    .faq-aside a:hover { color: var(--brown); border-color: var(--brown); }
-    .faq-list { display: flex; flex-direction: column; }
-    .faq-item { border-bottom: 1px solid var(--parchment); }
-    .faq-question { width: 100%; background: none; border: none; padding: 1.4rem 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer; text-align: left; }
-    .faq-question h4 { font-family: var(--font-display); font-size: 1.1rem; color: var(--brown); font-weight: 500; line-height: 1.3; }
-    .faq-icon { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--parchment); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; color: var(--brown-light); }
-    .faq-item.open .faq-icon { background: var(--gold); border-color: var(--gold); color: var(--white); transform: rotate(45deg); }
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.45s var(--ease-out), padding 0.3s ease; }
-    .faq-answer p { font-family: var(--font-body); font-size: 1rem; color: var(--text-muted); line-height: 1.75; padding-bottom: 1.4rem; }
-    .faq-item.open .faq-answer { max-height: 300px; }
-
-    /* ── FOOTER ── */
-    footer { background: var(--brown); padding: 5rem 0 2.5rem; }
-    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .footer-brand .brand-name { font-family: var(--font-display); font-size: 2rem; font-style: italic; color: var(--gold-light); margin-bottom: 0.4rem; }
-    .footer-brand .brand-tag { font-family: var(--font-sans); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,219,200,0.45); margin-bottom: 1.4rem; }
-    .footer-brand p { font-family: var(--font-body); font-size: 0.97rem; color: rgba(232,219,200,0.6); line-height: 1.7; max-width: 32ch; margin-bottom: 1.8rem; }
-    .social-links { display: flex; gap: 0.8rem; }
-    .social-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(184,135,58,0.35); display: flex; align-items: center; justify-content: center; color: var(--gold-light); transition: all 0.3s ease; }
-    .social-link:hover { background: var(--gold); border-color: var(--gold); color: var(--white); }
-    .footer-col h4 { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1.4rem; }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
-    .footer-col a { font-family: var(--font-body); font-size: 0.97rem; color: rgba(232,219,200,0.6); transition: color 0.3s ease; }
-    .footer-col a:hover { color: var(--gold-light); }
-    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 2.5rem; flex-wrap: wrap; gap: 1rem; }
-    .footer-bottom p { font-family: var(--font-sans); font-size: 0.7rem; color: rgba(232,219,200,0.35); letter-spacing: 0.05em; }
-    .footer-bottom a { font-family: var(--font-sans); font-size: 0.7rem; color: rgba(232,219,200,0.4); transition: color 0.3s ease; }
-    .footer-bottom a:hover { color: var(--gold-light); }
-
-    /* ── BACK TO TOP ── */
-    #back-top { position: fixed; bottom: 2rem; right: 2rem; width: 46px; height: 46px; background: var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.4s ease; box-shadow: 0 4px 16px rgba(184,135,58,0.4); z-index: 50; border: none; color: var(--white); }
-    #back-top.visible { opacity: 1; pointer-events: auto; }
-    #back-top:hover { background: var(--gold-light); transform: translateY(-2px); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1024px) { .menu-grid { grid-template-columns: repeat(2, 1fr); } .subs-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; } .faq-grid { grid-template-columns: 1fr; gap: 3rem; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; } }
-    @media (max-width: 768px) { .nav-links, .nav-cta { display: none; } .hamburger { display: flex; } .menu-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; } .menu-tabs { flex-wrap: wrap; width: 100%; } .menu-tab { flex: 1; text-align: center; } }
-  </style>
+@media(max-width:1024px){.faq-layout,.seasonal-inner{grid-template-columns:1fr}.s-img{height:260px}.s-content{padding:2.5rem 2rem}.cards-grid{grid-template-columns:repeat(2,1fr)}.subs-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto}.footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}}
+@media(max-width:640px){.cards-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr;gap:2rem}}
+</style>
 </head>
 <body>
 
-  <!-- LOADER -->
-  <div id="loader">
-    <div class="loader-inner">
-      <div class="loader-logo">Maison Dorée</div>
-      <div class="loader-bar"></div>
-      <div class="loader-tagline">Our Menu</div>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 13V3M3 8l5-5 5 5"/></svg></button>
+
+<div class="mob" id="mob">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="menu.html" onclick="closeMob()">Our Menu</a>
+  <a href="contact.html" onclick="closeMob()">Visit &amp; Order</a>
+  <a href="contact.html" class="mob-cta" onclick="closeMob()">Order Now</a>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Maison Dorée</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="menu.html" class="active">Our Menu</a></li>
+    <li><a href="contact.html">Visit &amp; Order</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Order Now</a>
+  <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<main>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="ph-bg" style="background-image:url('https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1600&q=80')"></div>
+  <div class="ph-overlay"></div><div class="ph-grain"></div>
+  <div class="ph-content">
+    <div class="ph-eyebrow">Baked fresh before dawn · Daily</div>
+    <h1>Our <em>Menu</em></h1>
+    <p class="ph-sub">From the first sourdough pulled at 5 AM to the last tart glazed at noon — everything is made by hand with ingredients we'd choose for our own table.</p>
+  </div>
+</section>
+
+<!-- TABBED MENU -->
+<section id="menu-section">
+  <div class="tabs-sticky">
+    <div class="tabs-inner">
+      <button class="tab active" data-tab="breads">Artisan Breads</button>
+      <button class="tab" data-tab="viennoiserie">Viennoiseries</button>
+      <button class="tab" data-tab="patisserie">Pâtisserie</button>
+      <button class="tab" data-tab="seasonal-tab">Seasonal</button>
     </div>
   </div>
-
-  <!-- BACK TO TOP -->
-  <button id="back-top" aria-label="Back to top">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 8l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html" class="mobile-nav-link">Home</a>
-    <a href="menu.html" class="mobile-nav-link">Menu</a>
-    <a href="contact.html" class="mobile-nav-link">Visit & Contact</a>
-    <a href="contact.html#order" class="mobile-nav-link mobile-cta">Order Now</a>
-  </div>
-
-  <!-- NAV -->
-  <nav id="nav">
-    <a href="index.html" class="nav-logo">Maison Dorée</a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="menu.html" class="active">Menu</a></li>
-      <li><a href="contact.html">Visit & Contact</a></li>
-    </ul>
-    <a href="contact.html#order" class="nav-cta">Order Now</a>
-    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
-  </nav>
-
-  <main>
-
-    <!-- PAGE HERO -->
-    <section class="page-hero">
-      <div class="page-hero-bg"></div>
-      <div class="page-hero-grain"></div>
-      <div class="breadcrumb">
-        <div class="breadcrumb-inner">
-          <a href="index.html">Home</a>
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 2l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          <span>Our Menu</span>
-        </div>
+  <div class="wrap">
+    <!-- BREADS -->
+    <div class="panel active" id="tab-breads">
+      <div class="cards-grid">
+        <div class="card reveal"><div class="card-img"><img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=600&q=80" alt="Country Sourdough" loading="lazy"><span class="card-tag">Signature</span></div><div class="card-body"><h3>Country Sourdough</h3><p>48-hour cold-proofed on our 15-year-old starter. Red Fife & Einkorn wheat. Mahogany crust, open lacey crumb with slow-building tang.</p><div class="card-footer"><span class="card-price">$9.00</span><span class="card-note">900g loaf</span></div></div></div>
+        <div class="card reveal d1"><div class="card-img"><img src="https://images.unsplash.com/photo-1574085733277-851d9d856a3a?w=600&q=80" alt="Pain de Campagne" loading="lazy"></div><div class="card-body"><h3>Pain de Campagne</h3><p>20% whole rye, toasted seeds, densely flavoured. Brilliant with aged cheese or good butter at any hour.</p><div class="card-footer"><span class="card-price">$8.50</span><span class="card-note">750g loaf</span></div></div></div>
+        <div class="card reveal d2"><div class="card-img"><img src="https://images.unsplash.com/photo-1603046891744-1f21977a4f89?w=600&q=80" alt="Rosemary Focaccia" loading="lazy"><span class="card-tag r">Seasonal</span></div><div class="card-body"><h3>Rosemary Focaccia</h3><p>Thick, dimpled, drizzled in good olive oil with fresh rosemary and Maldon flakes. Cut to order at the counter.</p><div class="card-footer"><span class="card-price">$6.00</span><span class="card-note">Per quarter</span></div></div></div>
+        <div class="card reveal"><div class="card-img"><img src="https://images.unsplash.com/photo-1568471173242-461f0a730452?w=600&q=80" alt="Dark Rye" loading="lazy"></div><div class="card-body"><h3>Dark Rye &amp; Caraway</h3><p>Scandinavian-inspired dense rye with molasses depth and earthy caraway. Best thin-sliced with smoked salmon.</p><div class="card-footer"><span class="card-price">$8.00</span><span class="card-note">~500g loaf</span></div></div></div>
+        <div class="card reveal d1"><div class="card-img"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80" alt="Spelt Honey" loading="lazy"></div><div class="card-body"><h3>Spelt &amp; Honey Loaf</h3><p>50% white spelt with a touch of raw local honey. Soft crumb, subtle sweetness, exceptional toast.</p><div class="card-footer"><span class="card-price">$9.50</span><span class="card-note">~800g loaf</span></div></div></div>
+        <div class="card reveal d2"><div class="card-img"><img src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=600&q=80" alt="Sesame Batard" loading="lazy"><span class="card-tag s">New</span></div><div class="card-body"><h3>Sesame Bâtard</h3><p>Wheat loaf rolled in black and white sesame. Thin shattering crust and pillowy interior. Makes extraordinary sandwiches.</p><div class="card-footer"><span class="card-price">$7.50</span><span class="card-note">~600g loaf</span></div></div></div>
       </div>
-      <div class="page-hero-content">
-        <div class="page-hero-eyebrow">Baked fresh before dawn · Daily</div>
-        <h1>Our <em>Menu</em></h1>
-        <p class="page-hero-sub">From the first sourdough pulled at 5 AM to the last seasonal tart glazed at noon — everything here is made by hand, with ingredients we'd choose for our own table.</p>
+    </div>
+    <!-- VIENNOISERIE -->
+    <div class="panel" id="tab-viennoiserie">
+      <div class="cards-grid">
+        <div class="card reveal"><div class="card-img"><img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" alt="Butter Croissant" loading="lazy"><span class="card-tag">Signature</span></div><div class="card-body"><h3>Butter Croissant</h3><p>72-layer lamination with Brittany AOP butter. Shatteringly flaky exterior, honeycomb-soft interior. Gone by 10 AM.</p><div class="card-footer"><span class="card-price">$4.50</span><span class="card-note">Each</span></div></div></div>
+        <div class="card reveal d1"><div class="card-img"><img src="https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=600&q=80" alt="Almond Croissant" loading="lazy"><span class="card-tag">Bestseller</span></div><div class="card-body"><h3>Almond Croissant</h3><p>Day-old croissants soaked, filled with house frangipane, baked again until golden. Topped with toasted flaked almonds.</p><div class="card-footer"><span class="card-price">$5.50</span><span class="card-note">Each</span></div></div></div>
+        <div class="card reveal d2"><div class="card-img"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80" alt="Pain au Chocolat" loading="lazy"></div><div class="card-body"><h3>Pain au Chocolat</h3><p>Two batons of 70% Valrhona dark chocolate in laminated dough. A non-negotiable part of any proper morning.</p><div class="card-footer"><span class="card-price">$5.00</span><span class="card-note">Each</span></div></div></div>
+        <div class="card reveal"><div class="card-img"><img src="https://images.unsplash.com/photo-1617692855027-33b14f061079?w=600&q=80" alt="Canelé" loading="lazy"><span class="card-tag s">New</span></div><div class="card-body"><h3>Canelés Bordelais</h3><p>Dark burnished crust, custard-soft interior scented with Madagascan vanilla and dark rum. Baked in copper moulds.</p><div class="card-footer"><span class="card-price">$3.50</span><span class="card-note">Each / 4 for $12</span></div></div></div>
+        <div class="card reveal d1"><div class="card-img"><img src="https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?w=600&q=80" alt="Kouign-Amann" loading="lazy"><span class="card-tag r">Seasonal</span></div><div class="card-body"><h3>Kouign-Amann</h3><p>The Breton classic — caramelised butter and sugar folded into yeasted dough. Deeply lacquered crunchy edges.</p><div class="card-footer"><span class="card-price">$5.00</span><span class="card-note">Individual</span></div></div></div>
+        <div class="card reveal d2"><div class="card-img"><img src="https://images.unsplash.com/photo-1504733338215-5c1e8ada0eab?w=600&q=80" alt="Morning Bun" loading="lazy"></div><div class="card-body"><h3>Orange Morning Buns</h3><p>Croissant dough with orange zest, brown sugar and cinnamon, tossed warm in orange sugar. Sticky and extraordinary.</p><div class="card-footer"><span class="card-price">$5.00</span><span class="card-note">Each</span></div></div></div>
       </div>
-    </section>
-
-    <!-- MENU TABS -->
-    <section id="menu" class="section-pad">
-      <div class="container">
-        <div class="menu-intro reveal">
-          <p class="section-label center">What we offer</p>
-          <h2 class="section-title">Something for <em>every hour</em></h2>
-          <p class="section-body">Our menu changes with the seasons and the whims of the morning. These are our constants — the ones you can count on, rain or shine.</p>
-        </div>
-
-        <div class="menu-tabs reveal">
-          <button class="menu-tab active" data-tab="breads">Artisan Breads</button>
-          <button class="menu-tab" data-tab="viennoiserie">Viennoiseries</button>
-          <button class="menu-tab" data-tab="patisserie">Pâtisserie</button>
-        </div>
-
-        <!-- BREADS -->
-        <div class="menu-panel active" id="tab-breads">
-          <div class="menu-grid">
-            <div class="menu-card reveal">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=600&q=80" alt="Country Sourdough" loading="lazy">
-                <span class="menu-card-tag">Signature</span>
-              </div>
-              <div class="menu-card-body">
-                <h3>Country Sourdough</h3>
-                <p>48-hour cold-proofed miche built on our 15-year-old starter. Red Fife and Einkorn wheat, mahogany crust, open lacey crumb with a slow-building tang.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$9.00</span>
-                  <span class="menu-detail">Large 900g loaf</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-1">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1574085733277-851d9d856a3a?w=600&q=80" alt="Pain de Campagne" loading="lazy">
-              </div>
-              <div class="menu-card-body">
-                <h3>Pain de Campagne</h3>
-                <p>Rustic country loaf with 20% whole rye flour and a scattering of toasted seeds. Dense, deeply flavoured, and brilliant with aged cheese or good butter.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$8.50</span>
-                  <span class="menu-detail">Medium 750g loaf</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-2">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=600&q=80" alt="Sesame Batard" loading="lazy">
-                <span class="menu-card-tag new">New</span>
-              </div>
-              <div class="menu-card-body">
-                <h3>Sesame Bâtard</h3>
-                <p>An elongated wheat loaf rolled in black and white sesame, with a thin shattering crust and soft, pillowy interior. Makes extraordinary sandwiches.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$7.50</span>
-                  <span class="menu-detail">~600g loaf</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-3">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1568471173242-461f0a730452?w=600&q=80" alt="Dark Rye" loading="lazy">
-              </div>
-              <div class="menu-card-body">
-                <h3>Dark Rye & Caraway</h3>
-                <p>A Scandinavian-inspired dense rye bread with a deep molasses colour and earthy caraway. Best served thin-sliced with smoked salmon or cold cuts.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$8.00</span>
-                  <span class="menu-detail">~500g loaf</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1603046891744-1f21977a4f89?w=600&q=80" alt="Focaccia" loading="lazy">
-                <span class="menu-card-tag seasonal">Seasonal</span>
-              </div>
-              <div class="menu-card-body">
-                <h3>Rosemary Focaccia</h3>
-                <p>Our seasonal focaccia — thick, dimpled, and generously drizzled in good olive oil with fresh rosemary and flaked Maldon salt. Cut to order.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$6.00</span>
-                  <span class="menu-detail">Per quarter sheet</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-1">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80" alt="Spelt Sourdough" loading="lazy">
-              </div>
-              <div class="menu-card-body">
-                <h3>Spelt & Honey Loaf</h3>
-                <p>A lighter, more approachable loaf using 50% white spelt with a touch of local raw honey. Soft crumb, subtle sweetness, exceptional toast.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$9.50</span>
-                  <span class="menu-detail">~800g loaf</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- VIENNOISERIE -->
-        <div class="menu-panel" id="tab-viennoiserie">
-          <div class="menu-grid">
-            <div class="menu-card reveal">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" alt="Butter Croissant" loading="lazy">
-                <span class="menu-card-tag">Signature</span>
-              </div>
-              <div class="menu-card-body">
-                <h3>Butter Croissant</h3>
-                <p>72-layer lamination with Brittany AOP butter. Shatteringly flaky exterior, honeycomb-soft interior. Available from 7 AM — gone by 10.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$4.50</span>
-                  <span class="menu-detail">Each</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-1">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=600&q=80" alt="Almond Croissant" loading="lazy">
-                <span class="menu-card-tag">Bestseller</span>
-              </div>
-              <div class="menu-card-body">
-                <h3>Almond Croissant</h3>
-                <p>Day-old croissants syrup-soaked and filled with house-made almond frangipane, then baked again until golden. Topped with toasted flaked almonds.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$5.50</span>
-                  <span class="menu-detail">Each</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-2">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80" alt="Pain au Chocolat" loading="lazy">
-              </div>
-              <div class="menu-card-body">
-                <h3>Pain au Chocolat</h3>
-                <p>Two batons of 70% Valrhona dark chocolate wrapped in the same laminated dough as our croissant. A non-negotiable part of any proper morning.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$5.00</span>
-                  <span class="menu-detail">Each</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-3">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?w=600&q=80" alt="Kouign-Amann" loading="lazy">
-                <span class="menu-card-tag seasonal">Seasonal</span>
-              </div>
-              <div class="menu-card-body">
-                <h3>Kouign-Amann</h3>
-                <p>The Breton classic — layers of caramelised butter and sugar folded into yeasted dough, baked until the edges are deeply lacquered and crunchy.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$5.00</span>
-                  <span class="menu-detail">Individual</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1617692855027-33b14f061079?w=600&q=80" alt="Canelé" loading="lazy">
-                <span class="menu-card-tag new">New</span>
-              </div>
-              <div class="menu-card-body">
-                <h3>Canelés Bordelais</h3>
-                <p>Small Bordeaux pastries with a dark, burnished crust and a custard-soft interior scented with Madagascan vanilla and dark rum. Baked in copper moulds.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$3.50</span>
-                  <span class="menu-detail">Each / 4 for $12</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-1">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1504733338215-5c1e8ada0eab?w=600&q=80" alt="Morning Bun" loading="lazy">
-              </div>
-              <div class="menu-card-body">
-                <h3>Orange Morning Buns</h3>
-                <p>Croissant dough spiral-rolled with orange zest, brown sugar and cinnamon, then tossed in orange sugar. Warm, sticky, extraordinary.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$5.00</span>
-                  <span class="menu-detail">Each</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- PÂTISSERIE -->
-        <div class="menu-panel" id="tab-patisserie">
-          <div class="menu-grid">
-            <div class="menu-card reveal">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80" alt="Seasonal Fruit Tart" loading="lazy">
-                <span class="menu-card-tag seasonal">Seasonal</span>
-              </div>
-              <div class="menu-card-body">
-                <h3>Seasonal Fruit Tart</h3>
-                <p>Crisp pâte sablée shell filled with vanilla pastry cream, topped with whatever fruit is ripest from our farmers market haul that week. Changed every Monday.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$6.50</span>
-                  <span class="menu-detail">Individual</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-1">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=600&q=80" alt="Lemon Tart" loading="lazy">
-                <span class="menu-card-tag">Bestseller</span>
-              </div>
-              <div class="menu-card-body">
-                <h3>Tarte au Citron</h3>
-                <p>Sharp, intensely lemony curd in a buttery shell, finished with a thin torched Italian meringue. The most requested item at every catering event we do.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$6.50</span>
-                  <span class="menu-detail">Individual</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-2">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80" alt="Opera Cake" loading="lazy">
-              </div>
-              <div class="menu-card-body">
-                <h3>Opéra Cake</h3>
-                <p>Classic French opera — layers of joconde sponge, coffee buttercream, and bitter chocolate ganache. Meticulous, elegant, worth every minute of making.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$8.00</span>
-                  <span class="menu-detail">Per slice</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-3">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=600&q=80" alt="Paris-Brest" loading="lazy">
-                <span class="menu-card-tag new">New</span>
-              </div>
-              <div class="menu-card-body">
-                <h3>Paris-Brest</h3>
-                <p>Choux pastry ring split and filled with hazelnut praline mousseline cream. Rich, nutty and deeply satisfying in a way that simple pastries rarely are.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$7.50</span>
-                  <span class="menu-detail">Individual</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80" alt="Celebration Cake" loading="lazy">
-              </div>
-              <div class="menu-card-body">
-                <h3>Custom Celebration Cakes</h3>
-                <p>Bespoke cakes designed around your occasion. We offer a consultation, then handle everything from sponge to décor. Minimum 72 hours notice required.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">From $80</span>
-                  <span class="menu-detail">By enquiry</span>
-                </div>
-              </div>
-            </div>
-            <div class="menu-card reveal reveal-delay-1">
-              <div class="menu-card-img">
-                <img src="https://images.unsplash.com/photo-1549399842-03b9dc941ca8?w=600&q=80" alt="Madeleine" loading="lazy">
-              </div>
-              <div class="menu-card-body">
-                <h3>Madeleines</h3>
-                <p>Shell-shaped French sponge cakes made fresh every morning with browned butter and real lemon zest. Served warm from 8 AM. Sold by the half-dozen.</p>
-                <div class="menu-card-footer">
-                  <span class="menu-price">$7.00</span>
-                  <span class="menu-detail">Half-dozen</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    </div>
+    <!-- PÂTISSERIE -->
+    <div class="panel" id="tab-patisserie">
+      <div class="cards-grid">
+        <div class="card reveal"><div class="card-img"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80" alt="Seasonal Tart" loading="lazy"><span class="card-tag r">Seasonal</span></div><div class="card-body"><h3>Seasonal Fruit Tart</h3><p>Crisp pâte sablée, vanilla pastry cream, ripest market fruit. Changed every Monday without fail.</p><div class="card-footer"><span class="card-price">$6.50</span><span class="card-note">Individual</span></div></div></div>
+        <div class="card reveal d1"><div class="card-img"><img src="https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=600&q=80" alt="Lemon Tart" loading="lazy"><span class="card-tag">Bestseller</span></div><div class="card-body"><h3>Tarte au Citron</h3><p>Sharp intensely lemony curd in a buttery shell, finished with torched Italian meringue. Our most re-ordered item.</p><div class="card-footer"><span class="card-price">$6.50</span><span class="card-note">Individual</span></div></div></div>
+        <div class="card reveal d2"><div class="card-img"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80" alt="Opera Cake" loading="lazy"></div><div class="card-body"><h3>Opéra Cake</h3><p>Classic French opera — joconde sponge, coffee buttercream, bitter chocolate ganache. Meticulous and worth every minute.</p><div class="card-footer"><span class="card-price">$8.00</span><span class="card-note">Per slice</span></div></div></div>
+        <div class="card reveal"><div class="card-img"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80" alt="Celebration Cake" loading="lazy"></div><div class="card-body"><h3>Custom Celebration Cakes</h3><p>Bespoke cakes for your occasion. Min. 5 days notice. Consultation included. We handle everything from sponge to décor.</p><div class="card-footer"><span class="card-price">From $80</span><span class="card-note">By enquiry</span></div></div></div>
+        <div class="card reveal d1"><div class="card-img"><img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=600&q=80" alt="Paris-Brest" loading="lazy"><span class="card-tag s">New</span></div><div class="card-body"><h3>Paris-Brest</h3><p>Choux pastry ring filled with hazelnut praline mousseline. Rich, nutty, and deeply satisfying every single time.</p><div class="card-footer"><span class="card-price">$7.50</span><span class="card-note">Individual</span></div></div></div>
+        <div class="card reveal d2"><div class="card-img"><img src="https://images.unsplash.com/photo-1549399842-03b9dc941ca8?w=600&q=80" alt="Madeleines" loading="lazy"></div><div class="card-body"><h3>Madeleines</h3><p>Shell-shaped sponge with browned butter and real lemon zest. Served warm from 8 AM. Sold by the half-dozen.</p><div class="card-footer"><span class="card-price">$7.00</span><span class="card-note">Half-dozen</span></div></div></div>
       </div>
-    </section>
-
-    <!-- SEASONAL FEATURE -->
-    <section id="seasonal">
-      <div class="container">
-        <div class="seasonal-inner reveal">
-          <img src="https://images.unsplash.com/photo-1510693206972-df098062cb71?w=800&q=80" alt="Spring Strawberry Collection" class="seasonal-img" loading="lazy">
-          <div class="seasonal-content">
-            <p class="section-label">This week's special</p>
-            <h2 class="section-title">Spring <em>Strawberry</em> Collection</h2>
-            <p class="section-body">Every April we celebrate the arrival of the first local strawberries with a week of dedicated specials — strawberry tarts, strawberry cream puffs, and our beloved strawberry sourdough with vanilla butter. Available while the strawberries hold up, which in our experience is never long enough.</p>
-            <a href="contact.html#order" class="btn-primary" style="width:fit-content;">
-              Reserve Your Box
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SUBSCRIPTIONS -->
-    <section id="subscriptions" class="section-pad">
-      <div class="container">
-        <div class="subs-header reveal">
-          <p class="section-label center">Never miss a loaf</p>
-          <h2 class="section-title">Bread <em>Subscriptions</em></h2>
-          <p class="section-body" style="margin:0 auto;text-align:center;">Our weekly subscription boxes are collected every Thursday morning. Cancel or pause anytime with 48 hours notice.</p>
-        </div>
-        <div class="subs-grid">
-          <div class="sub-card reveal">
-            <h3>The Essential</h3>
-            <div class="sub-freq">Weekly · Thursday collection</div>
-            <div class="sub-price"><sup>$</sup>28</div>
-            <div class="sub-price-note">per week · cancel anytime</div>
-            <ul class="sub-features">
-              <li>One large sourdough or country loaf</li>
-              <li>Two butter croissants</li>
-              <li>One seasonal pastry of the week</li>
-              <li>10% off all counter purchases</li>
-            </ul>
-            <a href="contact.html#order" class="btn-ghost">Get Started</a>
-          </div>
-          <div class="sub-card featured reveal reveal-delay-1">
-            <div class="sub-featured-badge">Most Popular</div>
-            <h3>The Household</h3>
-            <div class="sub-freq">Weekly · Thursday collection</div>
-            <div class="sub-price"><sup>$</sup>48</div>
-            <div class="sub-price-note">per week · cancel anytime</div>
-            <ul class="sub-features">
-              <li>Two large sourdough loaves (your choice)</li>
-              <li>Four butter croissants or viennoiseries</li>
-              <li>One full seasonal tart or cake slice</li>
-              <li>Two madeleines</li>
-              <li>15% off all counter purchases</li>
-              <li>First access to limited weekly specials</li>
-            </ul>
-            <a href="contact.html#order" class="btn-primary">Get Started</a>
-          </div>
-          <div class="sub-card reveal reveal-delay-2">
-            <h3>The Patron</h3>
-            <div class="sub-freq">Bi-weekly · Thursday collection</div>
-            <div class="sub-price"><sup>$</sup>85</div>
-            <div class="sub-price-note">per fortnight · cancel anytime</div>
-            <ul class="sub-features">
-              <li>A curated selection of four loaves</li>
-              <li>Eight assorted viennoiseries</li>
-              <li>One full-size celebration tart</li>
-              <li>Seasonal preserves or butters</li>
-              <li>20% off all purchases, always</li>
-              <li>Invitation to quarterly bakery evenings</li>
-            </ul>
-            <a href="contact.html#order" class="btn-ghost">Get Started</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="section-pad">
-      <div class="container">
-        <div class="faq-grid">
-          <div class="faq-aside reveal">
-            <p class="section-label">Good to know</p>
-            <h3>Frequently<br><em>Asked</em></h3>
-            <p>A few things people often want to know before their first visit. If you have something else on your mind, we're always happy to chat in person or by email.</p>
-            <a href="contact.html">Send us a message →</a>
-          </div>
-          <div class="faq-list reveal reveal-delay-2">
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false">
-                <h4>What time do you open, and when do things sell out?</h4>
-                <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-              </button>
-              <div class="faq-answer"><p>We open at 7 AM Monday through Friday, 6:30 AM on Saturday, and 7 AM on Sunday. Croissants and viennoiseries typically sell out by 10–10:30 AM. Bread lasts a little longer — usually until early afternoon. We strongly recommend arriving before 9 AM if you have your heart set on something specific.</p></div>
-            </div>
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false">
-                <h4>Can I pre-order bread or pastries?</h4>
-                <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-              </button>
-              <div class="faq-answer"><p>Yes — we accept pre-orders for whole loaves, pastry selections of 6 or more, and all celebration cakes. Use the order form on our contact page, or call us before noon the day prior. Pre-orders are held until 11 AM on collection day.</p></div>
-            </div>
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false">
-                <h4>Do you cater for dietary requirements?</h4>
-                <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-              </button>
-              <div class="faq-answer"><p>We bake in a kitchen that handles gluten, dairy, eggs, and nuts, so we cannot guarantee any item is allergen-free. That said, we do offer a dark rye loaf that is dairy-free, and several vegan-friendly options each week. Please speak to us at the counter or contact us in advance.</p></div>
-            </div>
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false">
-                <h4>How do I store sourdough bread?</h4>
-                <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-              </button>
-              <div class="faq-answer"><p>Leave the cut side face-down on a board at room temperature — this is all you need for 2–3 days. Never refrigerate sourdough; it stales much faster. For longer storage, slice and freeze on day one or two, then toast from frozen. A damp cloth rewarm at 180°C for 8 minutes also works beautifully for a whole loaf.</p></div>
-            </div>
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false">
-                <h4>How far in advance must I order a celebration cake?</h4>
-                <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-              </button>
-              <div class="faq-answer"><p>We require a minimum of 5 days notice for standard celebration cakes, and 10 days for tiered or particularly elaborate designs. We'll arrange a brief consultation to discuss flavours, design and allergens, then a 50% deposit confirms your booking. The remaining balance is collected at collection.</p></div>
-            </div>
-            <div class="faq-item">
-              <button class="faq-question" aria-expanded="false">
-                <h4>Do you offer wholesale for restaurants or cafés?</h4>
-                <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-              </button>
-              <div class="faq-answer"><p>Yes — we supply a small number of local restaurants and cafés with daily bread and a weekly pastry selection. We work best with partners who value slow bread over convenience. If that sounds like you, reach out via our contact page and we'll set up a tasting.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="brand-name">Maison Dorée</div>
-          <div class="brand-tag">Artisan Bakery &amp; Pâtisserie · Est. 2009</div>
-          <p>A small bakery in the Old Town Quarter dedicated to the craft of slow, honest baking. Come early. The croissants go fast.</p>
-          <div class="social-links">
-            <a class="social-link" href="#" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-            <a class="social-link" href="#" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-            <a class="social-link" href="#" aria-label="Pinterest"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.852 0 1.265.64 1.265 1.408 0 .858-.546 2.14-.828 3.33-.236.995.499 1.806 1.476 1.806 1.772 0 3.135-1.867 3.135-4.563 0-2.39-1.718-4.059-4.168-4.059-2.837 0-4.502 2.126-4.502 4.323 0 .856.33 1.773.741 2.274a.3.3 0 0 1 .07.286c-.076.315-.245.995-.278 1.134-.044.183-.145.222-.333.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></a>
-          </div>
-        </div>
-        <div class="footer-col">
-          <h4>Navigate</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#about">Our Story</a></li>
-            <li><a href="menu.html">Our Menu</a></li>
-            <li><a href="contact.html">Visit & Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Offerings</h4>
-          <ul>
-            <li><a href="menu.html#tab-breads">Artisan Breads</a></li>
-            <li><a href="menu.html#tab-viennoiserie">Viennoiseries</a></li>
-            <li><a href="menu.html#tab-patisserie">Cakes & Tarts</a></li>
-            <li><a href="contact.html#order">Custom Cakes</a></li>
-            <li><a href="menu.html#subscriptions">Subscriptions</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Visit</h4>
-          <ul>
-            <li><a href="contact.html">14 Rue de la Paix</a></li>
-            <li><a href="contact.html">Old Town Quarter</a></li>
-            <li><a href="tel:+15550421909">+1 (555) 042-1909</a></li>
-            <li><a href="mailto:hello@maisondoree.com">hello@maisondoree.com</a></li>
-            <li><a href="contact.html">Get Directions →</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2026 Maison Dorée Boulangerie. All rights reserved.</p>
-        <div style="display:flex;gap:1.5rem;">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Use</a>
-          <a href="#">Wholesale</a>
+    </div>
+    <!-- SEASONAL TAB -->
+    <div class="panel" id="tab-seasonal-tab">
+      <div style="background:var(--brown);border-radius:4px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;margin-bottom:32px">
+        <img src="https://images.unsplash.com/photo-1510693206972-df098062cb71?w=800&q=80" alt="Spring Collection" style="height:380px;object-fit:cover;display:block;width:100%;filter:brightness(.6) saturate(.8)" loading="lazy">
+        <div style="padding:3rem;display:flex;flex-direction:column;justify-content:center">
+          <div class="lbl lt">April 2026</div>
+          <h2 class="h2" style="color:var(--cream);margin-top:.5rem">Spring <em>Strawberry</em> Collection</h2>
+          <p class="body" style="color:rgba(232,219,200,.65);margin-top:1rem">Every April we celebrate the first local strawberries — tarts, cream puffs, and our beloved strawberry sourdough with vanilla butter. Available while the season holds.</p>
+          <div style="margin-top:2rem"><a href="contact.html" class="btn btn-gold">Reserve Your Box</a></div>
         </div>
       </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script>
-    // LOADER
-    window.addEventListener('load', () => { setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1800); });
+<!-- SEASONAL FEATURE -->
+<section id="seasonal">
+  <div class="wrap">
+    <div class="seasonal-inner reveal">
+      <img class="s-img" src="https://images.unsplash.com/photo-1510693206972-df098062cb71?w=800&q=80" alt="Spring Strawberry Collection" loading="lazy">
+      <div class="s-content">
+        <div class="lbl lt">This week's special</div>
+        <h2 class="h2">Spring <em>Strawberry</em> Collection</h2>
+        <p class="body">Every April we celebrate the arrival of the first local strawberries with a week of dedicated specials. Available while they hold — which in our experience is never long enough.</p>
+        <div style="margin-top:2.5rem"><a href="contact.html" class="btn btn-gold">Reserve Your Box</a></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // BACK TO TOP
-    document.getElementById('back-top').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    window.addEventListener('scroll', () => { document.getElementById('back-top').classList.toggle('visible', window.scrollY > 500); });
+<!-- SUBSCRIPTIONS -->
+<section id="subs">
+  <div class="wrap">
+    <div class="subs-header">
+      <div class="lbl c lt reveal">Never miss a loaf</div>
+      <h2 class="h2 lt reveal d1" style="text-align:center">Bread <em>Subscriptions</em></h2>
+      <p class="body reveal d2" style="color:rgba(232,219,200,.55);text-align:center;margin:0 auto">Collected every Thursday morning. Cancel or pause with 48 hours notice.</p>
+    </div>
+    <div class="subs-grid">
+      <div class="sub-card reveal">
+        <div class="sub-name">The Essential</div>
+        <div class="sub-freq">Weekly · Thursday collection</div>
+        <div class="sub-price"><sup>$</sup>28</div>
+        <div class="sub-period">per week · cancel anytime</div>
+        <ul class="sub-feats">
+          <li>One large sourdough or country loaf</li>
+          <li>Two butter croissants</li>
+          <li>One seasonal pastry of the week</li>
+          <li>10% off all counter purchases</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline-lt">Get Started</a>
+      </div>
+      <div class="sub-card feat reveal d1">
+        <div class="sub-badge">Most Popular</div>
+        <div class="sub-name">The Household</div>
+        <div class="sub-freq">Weekly · Thursday collection</div>
+        <div class="sub-price"><sup>$</sup>48</div>
+        <div class="sub-period">per week · cancel anytime</div>
+        <ul class="sub-feats">
+          <li>Two sourdough loaves of your choice</li>
+          <li>Four butter croissants or viennoiseries</li>
+          <li>One full seasonal tart or cake slice</li>
+          <li>15% off all counter purchases</li>
+          <li>First access to weekly specials</li>
+        </ul>
+        <a href="contact.html" class="btn btn-gold">Get Started</a>
+      </div>
+      <div class="sub-card reveal d2">
+        <div class="sub-name">The Patron</div>
+        <div class="sub-freq">Bi-weekly · Thursday collection</div>
+        <div class="sub-price"><sup>$</sup>85</div>
+        <div class="sub-period">per fortnight · cancel anytime</div>
+        <ul class="sub-feats">
+          <li>Four curated loaves each fortnight</li>
+          <li>Eight assorted viennoiseries</li>
+          <li>One full-size celebration tart</li>
+          <li>Seasonal preserves or butters</li>
+          <li>20% off all purchases, always</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline-lt">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // HAMBURGER
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      mobileMenu.classList.toggle('open');
-      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-    });
-    document.querySelectorAll('.mobile-nav-link').forEach(link => {
-      link.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
-    });
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="faq-layout">
+      <div class="faq-aside reveal">
+        <div class="lbl">Good to know</div>
+        <h3><em>Frequently</em> Asked</h3>
+        <p>A few things people often want to know before their first visit. If you have something else on your mind, we're always happy to chat in person or by email.</p>
+        <a href="contact.html">Send us a message →</a>
+      </div>
+      <div class="faq-list reveal d2">
+        <div class="faq-item">
+          <button class="faq-q"><h4>What time do you open and when do things sell out?</h4><div class="faq-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+          <div class="faq-a"><p>We open at 7 AM Monday–Friday, 6:30 AM Saturday, and 7 AM Sunday. Croissants and viennoiseries typically sell out by 10–10:30 AM. Bread lasts until early afternoon. Arrive before 9 AM if you have your heart set on something specific.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><h4>Can I pre-order bread or pastries?</h4><div class="faq-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+          <div class="faq-a"><p>Yes — we accept pre-orders for whole loaves, pastry selections of 6 or more, and all celebration cakes. Use the order form on our contact page or call before noon the day prior. Pre-orders are held until 11 AM on collection day.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><h4>Do you cater for dietary requirements?</h4><div class="faq-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+          <div class="faq-a"><p>We bake in a kitchen handling gluten, dairy, eggs, and nuts — we cannot guarantee any item is allergen-free. Our dark rye is dairy-free and we offer several vegan options each week. Please speak to us at the counter or contact us in advance.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><h4>How far ahead must I order a celebration cake?</h4><div class="faq-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+          <div class="faq-a"><p>Minimum 5 days for standard cakes, 10 days for tiered or elaborate designs. We arrange a brief consultation on flavours and design, then a 50% deposit confirms your booking. The balance is collected at pickup.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><h4>Do you offer wholesale for restaurants?</h4><div class="faq-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></button>
+          <div class="faq-a"><p>Yes — we supply a small number of local restaurants with daily bread. We work best with partners who value slow bread over convenience. Reach out via our contact page and we'll arrange a tasting.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // SCROLL REVEAL
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</main>
 
-    // MENU TABS
-    document.querySelectorAll('.menu-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
-        tab.classList.add('active');
-        const panel = document.getElementById('tab-' + tab.dataset.tab);
-        panel.classList.add('active');
-        panel.querySelectorAll('.reveal').forEach(el => { el.classList.remove('visible'); setTimeout(() => el.classList.add('visible'), 60); });
-      });
-    });
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="f-logo">Maison Dorée</div>
+      <div class="f-tag">Artisan Bakery &amp; Pâtisserie · Est. 2009</div>
+      <p class="f-desc">A small bakery in the Old Town Quarter dedicated to the craft of slow, honest baking. Come early. The croissants go fast.</p>
+      <div class="f-socials">
+        <a class="f-soc" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="f-soc" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="f-soc" href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.852 0 1.265.64 1.265 1.408 0 .858-.546 2.14-.828 3.33-.236.995.499 1.806 1.476 1.806 1.772 0 3.135-1.867 3.135-4.563 0-2.39-1.718-4.059-4.168-4.059-2.837 0-4.502 2.126-4.502 4.323 0 .856.33 1.773.741 2.274a.3.3 0 0 1 .07.286c-.076.315-.245.995-.278 1.134-.044.183-.145.222-.333.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="menu.html">Our Menu</a></li><li><a href="contact.html">Visit &amp; Order</a></li></ul></div>
+    <div class="footer-col"><h5>Menu</h5><ul><li><a href="menu.html">Artisan Breads</a></li><li><a href="menu.html">Viennoiseries</a></li><li><a href="menu.html">Pâtisserie</a></li><li><a href="menu.html">Subscriptions</a></li></ul></div>
+    <div class="footer-col"><h5>Visit</h5><ul><li><a href="contact.html">14 Rue de la Paix</a></li><li><a href="contact.html">Portland, OR 97201</a></li><li><a href="tel:+15550421909">+1 (555) 042-1909</a></li><li><a href="mailto:hello@maisondoree.com">hello@maisondoree.com</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Maison Dorée Boulangerie. All rights reserved.</p><div style="display:flex;gap:1.5rem"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+</footer>
 
-    // FAQ ACCORDION
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.closest('.faq-item');
-        const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
-        btn.setAttribute('aria-expanded', !isOpen);
-      });
-    });
-  </script>
+<script>
+const ham=document.getElementById('ham'),mob=document.getElementById('mob');
+ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
+function closeMob(){ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}
+window.addEventListener('scroll',()=>document.getElementById('btt').classList.toggle('show',window.scrollY>500));
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');}),{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+// Tabs
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const p=document.getElementById('tab-'+t.dataset.tab);
+    if(p){p.classList.add('active');p.querySelectorAll('.reveal').forEach(el=>{el.classList.remove('in');setTimeout(()=>el.classList.add('in'),60);});}
+  });
+});
+// FAQ
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.closest('.faq-item'),open=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!open)item.classList.add('open');
+  });
+});
+</script>
 </body>
 </html>
