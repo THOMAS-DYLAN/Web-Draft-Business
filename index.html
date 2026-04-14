@@ -266,6 +266,9 @@ footer{background:var(--brown);padding:4.5rem var(--pad) 2.5rem}
   .values-grid{grid-template-columns:1fr}
   .insta-grid{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ── DOUGH CURSOR ── */
+*, *::before, *::after { cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%0A%20%20%3Cpolygon%20points%3D%222%2C2%202%2C26%208%2C20%2013%2C30%2017%2C28%2012%2C18%2020%2C18%22%0A%20%20%20%20fill%3D%22%23f4e6d4%22%0A%20%20%20%20stroke%3D%22%235c3d22%22%0A%20%20%20%20stroke-width%3D%221.2%22%0A%20%20%20%20stroke-linejoin%3D%22round%22/%3E%0A%3C/svg%3E") 2 2, auto !important; }
 </style>
 </head>
 <body>
@@ -490,13 +493,13 @@ footer{background:var(--brown);padding:4.5rem var(--pad) 2.5rem}
     </div>
     <div class="footer-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="menu.html">Our Menu</a></li><li><a href="contact.html">Visit &amp; Order</a></li></ul></div>
     <div class="footer-col"><h5>Offerings</h5><ul><li><a href="menu.html">Artisan Breads</a></li><li><a href="menu.html">Viennoiseries</a></li><li><a href="menu.html">Pâtisserie</a></li><li><a href="menu.html">Subscriptions</a></li><li><a href="contact.html">Custom Cakes</a></li></ul></div>
-    <div class="footer-col"><h5>Visit</h5><ul><li><a href="contact.html">14 Rue de la Paix</a></li><li><a href="contact.html">Old Town, Portland OR</a></li><li><a href="tel:+15550421909">+1 (555) 042-1909</a></li><li><a href="mailto:hello@maisondoree.com">hello@maisondoree.com</a></li></ul></div>
+    <div class="footer-col"><h5>Visit</h5><ul><li><a href="contact.html">14 Rue de la Paix</a></li><li><a href="contact.html">Old Town, Portland OR</a></li><li><a href="tel:+15550421909">+1 (555) 042-1909</a></li><li><a href="/cdn-cgi/l/email-protection#b5ddd0d9d9daf5d8d4dcc6dadbd1dac7d0d09bd6dad8"><span class="__cf_email__" data-cfemail="365e535a5a59765b575f45595852594453531855595b">[email&#160;protected]</span></a></li></ul></div>
   </div>
   <div class="footer-bottom"><p>© 2026 Maison Dorée Boulangerie. All rights reserved.</p><div style="display:flex;gap:1.5rem"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
 </footer>
 
-<script>
-window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('out'),1800));
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
+document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{const l=document.getElementById('loader');if(l)l.classList.add('out');},800));
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>60);document.getElementById('btt').classList.toggle('show',window.scrollY>500);});
 const ham=document.getElementById('ham'),mob=document.getElementById('mob');
@@ -515,9 +518,4 @@ document.getElementById('tPrev').onclick=()=>goTo(cur-1);
 let auto=setInterval(()=>goTo(cur+1),5000);
 track.parentElement.addEventListener('mouseenter',()=>clearInterval(auto));
 track.parentElement.addEventListener('mouseleave',()=>{auto=setInterval(()=>goTo(cur+1),5000);});
-let tx=0;
-track.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
-track.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>50)goTo(d>0?cur+1:cur-1);});
-</script>
-</body>
-</html>
+</script><script></script>

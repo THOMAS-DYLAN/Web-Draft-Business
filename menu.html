@@ -181,6 +181,9 @@ footer{background:var(--brown);padding:4.5rem var(--pad) 2.5rem}
 
 @media(max-width:1024px){.faq-layout,.seasonal-inner{grid-template-columns:1fr}.s-img{height:260px}.s-content{padding:2.5rem 2rem}.cards-grid{grid-template-columns:repeat(2,1fr)}.subs-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto}.footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}}
 @media(max-width:640px){.cards-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr;gap:2rem}}
+
+/* ── DOUGH CURSOR ── */
+*, *::before, *::after { cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%0A%20%20%3Cpolygon%20points%3D%222%2C2%202%2C26%208%2C20%2013%2C30%2017%2C28%2012%2C18%2020%2C18%22%0A%20%20%20%20fill%3D%22%23f4e6d4%22%0A%20%20%20%20stroke%3D%22%235c3d22%22%0A%20%20%20%20stroke-width%3D%221.2%22%0A%20%20%20%20stroke-linejoin%3D%22round%22/%3E%0A%3C/svg%3E") 2 2, auto !important; }
 </style>
 </head>
 <body>
@@ -399,12 +402,12 @@ footer{background:var(--brown);padding:4.5rem var(--pad) 2.5rem}
     </div>
     <div class="footer-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="menu.html">Our Menu</a></li><li><a href="contact.html">Visit &amp; Order</a></li></ul></div>
     <div class="footer-col"><h5>Menu</h5><ul><li><a href="menu.html">Artisan Breads</a></li><li><a href="menu.html">Viennoiseries</a></li><li><a href="menu.html">Pâtisserie</a></li><li><a href="menu.html">Subscriptions</a></li></ul></div>
-    <div class="footer-col"><h5>Visit</h5><ul><li><a href="contact.html">14 Rue de la Paix</a></li><li><a href="contact.html">Portland, OR 97201</a></li><li><a href="tel:+15550421909">+1 (555) 042-1909</a></li><li><a href="mailto:hello@maisondoree.com">hello@maisondoree.com</a></li></ul></div>
+    <div class="footer-col"><h5>Visit</h5><ul><li><a href="contact.html">14 Rue de la Paix</a></li><li><a href="contact.html">Portland, OR 97201</a></li><li><a href="tel:+15550421909">+1 (555) 042-1909</a></li><li><a href="/cdn-cgi/l/email-protection#b5ddd0d9d9daf5d8d4dcc6dadbd1dac7d0d09bd6dad8"><span class="__cf_email__" data-cfemail="7e161b1212113e131f170d11101a110c1b1b501d1113">[email&#160;protected]</span></a></li></ul></div>
   </div>
   <div class="footer-bottom"><p>© 2026 Maison Dorée Boulangerie. All rights reserved.</p><div style="display:flex;gap:1.5rem"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
 const ham=document.getElementById('ham'),mob=document.getElementById('mob');
 ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
 function closeMob(){ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}
@@ -424,11 +427,12 @@ document.querySelectorAll('.tab').forEach(t=>{
 // FAQ
 document.querySelectorAll('.faq-q').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    const item=btn.closest('.faq-item'),open=item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
-    if(!open)item.classList.add('open');
-  });
-});
-</script>
-</body>
-</html>
+  const expanded = btn.getAttribute('aria-expanded')==='true';
+  document.querySelectorAll('.faq-q').forEach(b=>b.setAttribute('aria-expanded','false'));
+  document.querySelectorAll('.faq-a').forEach(a=>a.hidden=true);
+  if(!expanded){
+    btn.setAttribute('aria-expanded','true');
+    btn.nextElementSibling.hidden=false;
+  }
+});});
+</script><script></script>
